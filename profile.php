@@ -95,7 +95,7 @@
                         
                         while($row = $result->fetch_assoc()) 
                         { 
-                            if($row['sender'] == $id){ $friend = $row['reciever']; }
+                            if($row['sender'] == $user){ $friend = $row['reciever']; }
                             else{ $friend = $row['sender']; }
                     ?>
                         <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'>
