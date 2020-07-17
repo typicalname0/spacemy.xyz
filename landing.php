@@ -27,6 +27,18 @@
                     <input type="submit" value="Login">
                 </form>
                 <br>
+                <div class="info">
+                    Latest Blog Posts
+                </div>
+                <br>
+                <?php
+                    $result = $conn->query("SELECT id, title, author FROM blogs LIMIT 5");
+                    while($row = $result->fetch_assoc()) 
+                    {
+                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br>";
+                    }
+                ?>
+                <br>
                 THIS IS UNDER CONSTRUCTION!!
             </div>
             <div class="right">
@@ -35,10 +47,8 @@
                 </div>
                 <br>
                 <?php
-                    $stmt = $conn->prepare("SELECT * FROM `users`");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
+                    //preparing a statement isn't necessary, you're not querying with php input
+                    $result = $conn->query("SELECT id, username FROM `users`");
                     while($row = $result->fetch_assoc()) {
                         echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br>";
                     }
