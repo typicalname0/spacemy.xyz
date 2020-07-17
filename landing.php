@@ -14,9 +14,6 @@
         ?>
         <div class="container">
             <div class="left">
-                <div class="topBarWithItemsThing">
-                    <a href="blogs.php">Blogs</a> &nbsp;<a href="groups.php">Groups</a> &nbsp;<a href="register.php">Register</a> &nbsp;<a href="login.php">Login</a>
-                </div>
                 <div class="info">
                     Log in
                 </div>
@@ -27,6 +24,21 @@
                     <input type="submit" value="Login">
                 </form>
                 <br>
+                <div class="info">
+                    Latest Blog Posts
+                </div>
+                <br>
+                <?php
+                    $result = $conn->query("SELECT id, title, author FROM blogs ORDER BY id DESC LIMIT 5");
+                    while($row = $result->fetch_assoc()) 
+                    {
+                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br>";
+                    }
+                ?>
+                <br>
+                <div class="topBarWithItemsThing">
+                    <a href="blogs.php">Blogs</a> &nbsp;<a href="groups.php">Groups</a> &nbsp;<a href="register.php">Register</a> &nbsp;<a href="login.php">Login</a>
+                </div><br>
                 THIS IS UNDER CONSTRUCTION!!
             </div>
             <div class="right">
@@ -35,10 +47,8 @@
                 </div>
                 <br>
                 <?php
-                    $stmt = $conn->prepare("SELECT * FROM `users`");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
+                    //preparing a statement isn't necessary, you're not querying with php input
+                    $result = $conn->query("SELECT id, username FROM `users`");
                     while($row = $result->fetch_assoc()) {
                         echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br>";
                     }
