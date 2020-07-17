@@ -44,7 +44,7 @@
                             $id = $row['id'];
                             $status = $row['status'];
 
-                            echo "<br><br><h1 class='username' style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
+                            echo "<br><br><h1 style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
                             echo "<img width='235px;' src='pfp/" . $row['pfp'] . "'><hr>";
 
                             echo ' 
@@ -127,17 +127,13 @@
                     <div class="info">
                         <center>Interests</center>
                     </div>
-                    <div class="interests">
-                        <?php  echo $interests . "<br><br>"; ?>
-                    </div>
+                    <?php  echo $interests . "<br><br>"; ?>
                     <div class="info">
                         <center>Bio</center>
                     </div>
-                    <div class="bio">
-                        <?php
-                            echo $bio . "<br><br>";
-                        ?>
-                    </div>
+                    <?php
+                        echo $bio . "<br><br>";
+                    ?>
                     <div class="info">
                         <center>Comments</center>
                     </div>
