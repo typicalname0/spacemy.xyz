@@ -123,6 +123,7 @@
             <?php
                 echo '<img src="pfp/' . getPFP($_SESSION['user'], $conn) . '"><h2>' . htmlspecialchars($_SESSION['user']) . '</h1>';
             ?>
+		<small><a href="logout.php">logout</a><small>
             <form method="post" enctype="multipart/form-data">
 				<small>Select photo:</small>
 				<input type="file" name="fileToUpload" id="fileToUpload">
