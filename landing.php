@@ -32,11 +32,10 @@
                 </div>
                 <br>
                 <?php
-                    $result = $conn->query("SELECT id, title, date FROM blogs LIMIT 5");
+                    $result = $conn->query("SELECT id, title, author FROM blogs LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
-                        //substring here is used to remove the seconds from the date cause its not really necessary
-                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - ".substr($row['date'], 0, -3)."<br>";
+                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br>";
                     }
                 ?>
                 <br>
