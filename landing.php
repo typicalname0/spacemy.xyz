@@ -17,8 +17,17 @@
                 <div class="topBarWithItemsThing">
                     <a href="blogs.php">Blogs</a> &nbsp;<a href="groups.php">Groups</a> &nbsp;<a href="register.php">Register</a> &nbsp;<a href="login.php">Login</a>
                 </div>
-                THIS IS UNDER CONSTRUCTION!!<br>
-                if you're seeing this you're not logged in
+                <div class="info">
+                    Log in
+                </div>
+                <br>
+                <form method="post" action="/login.php">
+                    <input required placeholder="Username" type="text" name="username"><br>
+                    <input required placeholder="Password" type="password" name="password"><br><br>
+                    <input type="submit" value="Login">
+                </form>
+                <br>
+                THIS IS UNDER CONSTRUCTION!!
             </div>
             <div class="right">
                 <div class="info">
