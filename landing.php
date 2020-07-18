@@ -19,7 +19,7 @@
                     Log in
                 </div>
                 <br>
-                <form method="post" action="/login">
+                <form method="post" action="/login.php">
                     <input required placeholder="Username" type="text" name="username"><br>
                     <input required placeholder="Password" type="password" name="password"><br><br>
                     <input type="submit" value="Login"><span><small>   New user? <a href="/register">Register</a></small></span>
