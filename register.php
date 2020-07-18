@@ -56,6 +56,7 @@
                             
                                 $stmt->close();
                                 $conn->close();
+                                session_set_cookie_params(69420000)
                                 $_SESSION['user'] = htmlspecialchars($username);
                                 header("Location: manage.php");
                             }

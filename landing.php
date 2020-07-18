@@ -31,7 +31,7 @@
                 </div>
                 <br>
                 <?php
-                    $result = $conn->query("SELECT id, title, author FROM blogs LIMIT 5");
+                    $result = $conn->query("SELECT id, title, author FROM blogs ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
                         echo "<a href='/viewblog?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
@@ -45,6 +45,9 @@
                     <a href="blogs">Blogs</a> &nbsp;<a href="groups">Groups</a> &nbsp;<a href="register">Register</a> &nbsp;<a href="login">Login</a>
                 </div>
                 <br>
+                <div class="topBarWithItemsThing">
+                    <a href="blogs.php">Blogs</a> &nbsp;<a href="groups.php">Groups</a> &nbsp;<a href="register.php">Register</a> &nbsp;<a href="login.php">Login</a>
+                </div><br>
                 THIS IS UNDER CONSTRUCTION!!
             </div>
             <div class="right">

@@ -45,11 +45,11 @@
                 <div class="LeftHandUserInfo">
                     <br>
                     <br>
-                    <h1 style='margin: 0px;'><?php echo $user; ?></h1>
-                    <small><?php echo $status; ?></small>
+                    <h1 class='username' style='margin: 0px;'><?php echo $user; ?></h1>
+                    <small class='status'><?php echo $status; ?></small>
                     <br>
                     <br>
-                    <img width='235px;' src='/pfp/<?php echo $pfp; ?>'>
+                    <img class='pfp' width='235px;' src='/pfp/<?php echo $pfp; ?>'>
                     <hr>
                     <audio controls autoplay>
                         <source src="/music/<?php echo $music; ?>" type="audio/ogg">
@@ -109,43 +109,49 @@
                 <br>
                 <br>
                 <div class="RightHandUserInfo">
+                    <div id="interests">
                     <div class="info" style="text-align: center;">Interests</div>
                     <?php echo $interests; ?>
+                    </div>
                     <br>
                     <br>
+                    <div id="bio">
                     <div class="info" style="text-align: center;">Bio</div>
                     <?php echo $bio; ?>
+                    </div>
                     <br>
                     <br>
-                    <div class="info" style="text-align: center;">Comments</div>
-                    <?php if(isset($_SESSION['user'])){ ?>
-                    <form method="post" enctype="multipart/form-data">
-                        <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
-                        <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
-                    </form>
-                    <hr>
-                    <?php } ?>
-                    <div class="commentsList">
-                    <?php
-                        $stmt = $conn->prepare("SELECT * FROM `comments` WHERE toid = ? ORDER BY id DESC");
-                        $stmt->bind_param("s", $_GET['id']);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                            
-                        while($row = $result->fetch_assoc()) { ?>
-                            <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
-                                <div style="word-wrap: break-word;">
-                                    <small><?php echo $row['date']; ?></small>
-                                    <br>
-                                    <?php echo $row['text']; ?>
-                                </div>
-                                <div>
-                                    <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
-                                    <br>
-                                    <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
-                                </div>
-                            </div>
+                    <div id="comments">
+                        <div class="info" style="text-align: center;">Comments</div>
+                        <?php if(isset($_SESSION['user'])){ ?>
+                        <form method="post" enctype="multipart/form-data">
+                            <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
+                            <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
+                        </form>
+                        <hr>
                         <?php } ?>
+                        <div class="commentsList">
+                        <?php
+                            $stmt = $conn->prepare("SELECT * FROM `comments` WHERE toid = ? ORDER BY id DESC");
+                            $stmt->bind_param("s", $_GET['id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            
+                            while($row = $result->fetch_assoc()) { ?>
+                                <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
+                                    <div style="word-wrap: break-word;">
+                                        <small><?php echo $row['date']; ?></small>
+                                        <br>
+                                        <?php echo $row['text']; ?>
+                                    </div>
+                                    <div>
+                                        <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                                        <br>
+                                        <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
                 <br>
