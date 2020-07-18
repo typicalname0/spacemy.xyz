@@ -44,8 +44,8 @@
                             $id = $row['id'];
                             $status = $row['status'];
 
-                            echo "<br><br><h1 style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
-                            echo "<img width='235px;' src='pfp/" . $row['pfp'] . "'><hr>";
+                            echo "<br><br><h1 class='username' style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
+                            echo "<img class='pfp' width='235px;' src='pfp/" . $row['pfp'] . "'><hr>";
 
                             echo ' 
                             <audio controls autoplay>
@@ -124,40 +124,45 @@
             <div class="right">
                 <br><br>
                 <div class="RightHandUserInfo">
-                    <div class="info">
-                        <center>Interests</center>
+                    <div id="interests">
+                        <div class="info">
+                            <center>Interests</center>
+                        </div>
+                        <?php  echo $interests . "<br><br>"; ?>
                     </div>
-                    <?php  echo $interests . "<br><br>"; ?>
-                    <div class="info">
-                        <center>Bio</center>
-                    </div>
-                    <?php
-                        echo $bio . "<br><br>";
-                    ?>
-                    <div class="info">
-                        <center>Comments</center>
-                    </div>
-                    <form method="post" enctype="multipart/form-data">
-                        
-                    <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
-                        <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
-                    </form>
-                    <hr>
-                    <div class="commentsList">
+                    <div id="bio">
+                        <div class="info">
+                            <center>Bio</center>
+                        </div>
                         <?php
-                            $stmt = $conn->prepare("SELECT * FROM `comments` WHERE toid = ? ORDER BY id DESC");
-                            $stmt->bind_param("s", $id);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            
-                            while($row = $result->fetch_assoc()) {
-                                echo "<div class='commentRight'>";
-                                echo "  <small>" . $row['date'] . " <a href='deletecomment.php?id=" . $row['id'] . "'>[delete]</a></small><br>" . $row['text'];
-                                echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
-                                echo "  <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
-                                echo "</div>";
-                            }
+                            echo $bio . "<br><br>";
                         ?>
+                    </div>
+                    <div id="comments">
+                        <div class="info">
+                            <center>Comments</center>
+                        </div>
+                        <form method="post" enctype="multipart/form-data">
+                            <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
+                            <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
+                        </form>
+                        <hr>
+                        <div class="commentsList">
+                            <?php
+                                $stmt = $conn->prepare("SELECT * FROM `comments` WHERE toid = ? ORDER BY id DESC");
+                                $stmt->bind_param("s", $id);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                            
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<div class='commentRight'>";
+                                    echo "  <small>" . $row['date'] . " <a href='deletecomment.php?id=" . $row['id'] . "'>[delete]</a></small><br>" . $row['text'];
+                                    echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
+                                    echo "  <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
+                                    echo "</div>";
+                                }
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <br>
