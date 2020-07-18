@@ -154,14 +154,20 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                             
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<div class='commentRight'>";
-                                    echo "  <small>" . $row['date'] . " <a href='deletecomment.php?id=" . $row['id'] . "'>[delete]</a></small><br>" . $row['text'];
-                                    echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
-                                    echo "  <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
-                                    echo "</div>";
-                                }
-                            ?>
+                                while($row = $result->fetch_assoc()) { ?>
+                                    <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
+                                        <div style="word-wrap: break-word;">
+                                            <small><?php echo $row['date']; ?> <a href="deletecomment.php?id=<?php echo $row['id']; ?>">[delete]</a></small>
+                                            <br>
+                                            <?php echo $row['text']; ?>
+                                        </div>
+                                        <div>
+                                            <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                                            <br>
+                                            <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                         </div>
                     </div>
                 </div>
