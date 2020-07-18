@@ -121,7 +121,7 @@
                     </div>
                     <br>
                     <br>
-                    <div id="comments>
+                    <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
                         <?php if(isset($_SESSION['user'])){ ?>
                         <form method="post" enctype="multipart/form-data">
