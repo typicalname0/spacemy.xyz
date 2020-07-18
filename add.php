@@ -17,11 +17,7 @@ if($_GET['id'])
         exit("stop trying to friend yourself");
     }
 
-        $stmt = $conn->prepare("SELECT * FROM `friends` WHERE reciever = ? AND sender = ? OR reciever = ? AND sender = ?");
-        $stmt->bind_param("ssss", $user, $_SESSION['user'], $_SESSION['user'], $user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if($result->num_rows === 1) exit('you already friended this guy');
+        if(checkIfFriended($user, $_SESSION['user'], $conn)) { exit('you already friended this guy'); }
 
         $stmt = $conn->prepare("INSERT INTO friends (sender, reciever) VALUES (?, ?)");
         $stmt->bind_param("ss", $_SESSION['user'], $user);

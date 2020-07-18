@@ -58,8 +58,10 @@
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center">Contact</div>
-                        <?php if($user != $_SESSION['user'] && isset($_SESSION['user'])){ ?>
+                        <?php if($user != $_SESSION['user'] && isset($_SESSION['user'])){
+                        if(!checkIfFriended($user, $_SESSION['user'], $conn)) { ?>
                         <a class='contactbuttons' href='/add.php?id=<?php echo $id; ?>'>Friend User</a>
+                        <?php } ?>
                         <a style='float: right'class='contactbuttons' href='#?id=<?php echo $id; ?>'>Report User</a>
                         <br>
                         <br>

@@ -55,6 +55,16 @@ function getPFP($user, $connection) {
 	return $pfp;
 }
 
+function checkIfFriended($friend1, $friend2, $connection)
+{
+	$stmt = $connection->prepare("SELECT * FROM `friends` WHERE reciever = ? AND sender = ? OR reciever = ? AND sender = ?");
+	$stmt->bind_param("ssss", $friend1, $friend2, $friend2, $friend1);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	if($result->num_rows === 1){ return true; }
+	return false;
+}
+
 //thanks dzhaugasharov https://gist.github.com/afsalrahim/bc8caf497a4b54c5d75d
 function replaceBBcodes($text) {
 	$text = htmlspecialchars($text);
