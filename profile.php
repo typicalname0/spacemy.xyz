@@ -58,8 +58,10 @@
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center">Contact</div>
-                        <?php if($user != $_SESSION['user'] && isset($_SESSION['user'])){ ?>
+                        <?php if($user != $_SESSION['user'] && isset($_SESSION['user'])){
+                        if(!checkIfFriended($user, $_SESSION['user'], $conn)) { ?>
                         <a class='contactbuttons' href='/add.php?id=<?php echo $id; ?>'>Friend User</a>
+                        <?php } ?>
                         <a style='float: right'class='contactbuttons' href='#?id=<?php echo $id; ?>'>Report User</a>
                         <br>
                         <br>
@@ -87,21 +89,19 @@
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center;">Friends</div>
-                    <?php
-                        $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
-                        $stmt->bind_param("ss", $user, $user);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        
-                        while($row = $result->fetch_assoc()) 
-                        { 
-                            if($row['sender'] == $user){ $friend = $row['reciever']; }
-                            else{ $friend = $row['sender']; }
-                    ?>
-                        <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'>
-                            <img width='40px;' src='pfp/<?php echo getPFP($friend, $conn); ?>'>
-                        </a>
-                    <?php } ?>
+                        <?php
+                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
+                            $stmt->bind_param("ss", $user, $user);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            
+                            while($row = $result->fetch_assoc()) 
+                            { 
+                                if($row['sender'] == $user){ $friend = $row['reciever']; }
+                                else{ $friend = $row['sender']; }
+                        ?>
+                        <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'><img width='40px;' src='pfp/<?php echo getPFP($friend, $conn); ?>'></a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
