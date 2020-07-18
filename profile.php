@@ -90,7 +90,7 @@
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center;">Friends</div>
                         <?php
-                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
+                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE (sender = ? OR reciever = ?) AND status = 'ACCEPTED'");
                             $stmt->bind_param("ss", $user, $user);
                             $stmt->execute();
                             $result = $stmt->get_result();
