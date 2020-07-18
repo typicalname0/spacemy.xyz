@@ -25,6 +25,7 @@
 						while($row = $result->fetch_assoc()) {
 							$hash = $row['password'];
 							if(password_verify($_POST['password'], $hash)){
+								session_set_cookie_params(69420000);
 								$_SESSION['user'] = htmlspecialchars($_POST["username"]);
 								header("Location: manage.php");
 							} else {
