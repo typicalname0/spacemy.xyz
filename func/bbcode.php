@@ -78,17 +78,8 @@ class BBCode
     $output = '';
     foreach ($characters as &$ch)
     {
-      if ($ch === "\n") {
-        $lf ++;
-      } elseif ($ch === "\r") {
-        continue;
-      } else {
-        if ($lf === 1) {
+        if ($ch === '\n') {
           $output .= "\n<br>";
-          $lf = 0;
-        } elseif ($lf > 1) {
-          $output .= "\n\n<p>";
-          $lf = 0;
         }
 
         if ($ch === '<') {
@@ -102,15 +93,11 @@ class BBCode
         } else {
           $output .= $ch;
         }
-      }
     }
 
     // trailing linefeed handle
-    if ($lf === 1) {
-      $output .= "\n<br>";
-    } elseif ($lf > 1) {
-      $output .= "\n\n<p>";
-    }
+//      $output .= "\n<br>";
+
 
     return $output;
   }
