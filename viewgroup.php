@@ -40,6 +40,17 @@
         <div class="container">
             <h1><?php echo $name; ?></h1>
             <?php
+                if (isset($_SESSION['user'])) {
+                    $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
+                    $stmt->bind_param("s", $_SESSION['user']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) {
+                        if($row['currentgroup'] === $name) {
+                            echo "<a href='leavegroup.php'><button>Leave Group</button></a><br/><br/>";
+                        }
+                    }
+                }
                 echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
                 echo "Members:<br/>";
                 $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
