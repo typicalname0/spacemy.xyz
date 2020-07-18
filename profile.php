@@ -89,21 +89,19 @@
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center;">Friends</div>
-                    <?php
-                        $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
-                        $stmt->bind_param("ss", $user, $user);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        
-                        while($row = $result->fetch_assoc()) 
-                        { 
-                            if($row['sender'] == $user){ $friend = $row['reciever']; }
-                            else{ $friend = $row['sender']; }
-                    ?>
-                        <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'>
-                            <img width='40px;' src='pfp/<?php echo getPFP($friend, $conn); ?>'>
-                        </a>
-                    <?php } ?>
+                        <?php
+                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
+                            $stmt->bind_param("ss", $user, $user);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            
+                            while($row = $result->fetch_assoc()) 
+                            { 
+                                if($row['sender'] == $user){ $friend = $row['reciever']; }
+                                else{ $friend = $row['sender']; }
+                        ?>
+                        <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'><img width='40px;' src='pfp/<?php echo getPFP($friend, $conn); ?>'></a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
