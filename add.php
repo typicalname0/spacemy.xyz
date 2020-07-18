@@ -17,13 +17,13 @@ if($_GET['id'])
         exit("stop trying to friend yourself");
     }
 
-        if(checkIfFriended($user, $_SESSION['user'], $conn)) { exit('you already friended this guy'); }
+    if(checkIfFriended($user, $_SESSION['user'], $conn)) { exit('you already friended this guy'); }
 
-        $stmt = $conn->prepare("INSERT INTO friends (sender, reciever) VALUES (?, ?)");
-        $stmt->bind_param("ss", $_SESSION['user'], $user);
-        $stmt->execute();
-        $stmt->close();
+    $stmt = $conn->prepare("INSERT INTO friends (sender, reciever) VALUES (?, ?)");
+    $stmt->bind_param("ss", $_SESSION['user'], $user);
+    $stmt->execute();
+    $stmt->close();
 
-        header("Location: friends.php");
+    header("Location: friends.php");
 } else { header("Location: /"); }
 ?>
