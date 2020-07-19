@@ -11,61 +11,55 @@
     <body>
         <?php
             require("header.php");
+            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['query'])) 
+            {
+                $query = htmlspecialchars($_POST['query']); 
+                $sqlquery = "%".$query."%";
+                switch($_POST['queryfor'])
+                {
+                    case "Groups":
+                        $stmt = $conn->prepare("SELECT id, name FROM `groups` WHERE name LIKE ?");
+                        $queryfor = "Group";
+                        break;
+                    
+                    case "Blogs":
+                        $stmt = $conn->prepare("SELECT id, title FROM `blogs` WHERE title LIKE ?");
+                        $queryfor = "Blog";
+                        break;
+
+                    default:
+                        $stmt = $conn->prepare("SELECT id, username FROM `users` WHERE username LIKE ?");
+                        $queryfor = "User";
+                        break;
+                }
+
+                $stmt->bind_param("s", $sqlquery);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            } else { header("Location: /"); }
         ?>
         <div class="container">
-            <?php if (@$_POST['query'] && $_POST['query'] !== "") { ?>
-                <h1>Search results for <?php echo htmlspecialchars($_POST['query']); ?></h1>
-                <h3>Users:</h3>
-                <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
-                    $stmt = $conn->prepare("SELECT * FROM `users` WHERE username LIKE ?");
-                    $stmt->bind_param("s", $wc);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
-                    if ($result->num_rows !== 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<a href='/profiles.php?id=" . $row["id"] . "'>" . $row['username'] . "</a><br/>";
-                        }
-                    } else {
-                        echo "<b>Nothing matched your search query.</b>";
+            <h1><?php echo $queryfor ?> results for <u><?php echo $query; ?></u> (<?php echo $result->num_rows; ?>)</h1>
+            <?php 
+                while($row = $result->fetch_assoc())
+                {
+                    switch($_POST['queryfor'])
+                    {
+                        case "Groups":
+                            echo "<a href='viewgroup.php?id=".$row['id']."'>".$row['name']."</a><br>";
+                            break;
+                        
+                        case "Blogs":
+                            echo "<a href='viewblog.php?id=".$row['id']."'>".$row['title']."</a><br>";
+                            break;
+
+                        default:
+                            echo "<a href='/profile.php?id=".$row["id"]."'>".$row['username']."</a><br/>";
+                            break;
                     }
-                ?>
-                <h3>Groups:</h3>
-                <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
-                    $stmt = $conn->prepare("SELECT * FROM `groups` WHERE name LIKE ?");
-                    $stmt->bind_param("s", $wc);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
-                    if ($result->num_rows !== 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<a href='viewgroup.php?id=" . $row['id'] . "'>" . $row['name'] . "</a><br>";
-                        }
-                    } else {
-                        echo "<b>Nothing matched your search query.</b>";
-                    }
-                ?>
-                <h3>Blogs:</h3>
-                <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
-                    $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE title LIKE ?");
-                    $stmt->bind_param("s", $wc);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
-                    if ($result->num_rows !== 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<a href='viewblog.php?id=" . $row['id'] . "'>" . $row['title'] . "</a><br>";
-                        }
-                    } else {
-                        echo "<b>Nothing matched your search query.</b>";
-                    }
-                ?>
-            <?php } else {?>
-                <h1>No search query submitted.</h1>
-            <?php } ?>
+                }
+                if (!$result->num_rows) { echo "<b>No results matched your search query</a>"; }
+            ?>
         </div>
     </body>
 </html>

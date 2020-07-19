@@ -1,6 +1,7 @@
 <?php
 require("func/conn.php");
 require("func/settings.php");
+requireLogin();
 if($_GET['id']) 
 {
     $stmt = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
