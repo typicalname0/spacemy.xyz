@@ -10,7 +10,7 @@
     clear: both;
     display: table;
 }
-.search {float:right;}
+.header form {float:right;}
 .headerBottom {
     background-color: #003399;
     width: 100%;
