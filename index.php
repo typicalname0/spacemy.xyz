@@ -57,7 +57,7 @@
                                 <source src="music/' . $row['music'] . '" type="audio/ogg">
                             </audio><br><br>';
                             echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="group">
                             <div class="contactInfoTop">    
                                 <center>Contact</center>
                             </div>
@@ -70,7 +70,7 @@
                         }
                         
                         echo '<br><div class="contactInfo">
-                            <div class="contactInfoTop">    
+                            <div class="contactInfoTop" id="blogs">    
                                 <center>Blogs</center>
                             </div>';
                             $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE author = ?");
@@ -84,7 +84,7 @@
                         echo '</div><br>';
 
                         echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="badges">
                             <div class="contactInfoTop">    
                                 <center>Badges</center>
                             </div>
@@ -92,7 +92,7 @@
                         </div><br>';
 
                         echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="friends">
                             <div class="contactInfoTop">    
                                 <center>Friends</center>
                             </div>
