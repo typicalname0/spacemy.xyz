@@ -14,16 +14,30 @@
         ?>
         <div class="container">
             <h1>Groups [wip]</h1>
-            <a href="newgroup.php">make a new group</a><br><hr>
+            <form action="/search.php" method="post" class="search">
+                <input placeholder="Search for groups..." size="57" type="text" name="query">
+                <input type="hidden" name="queryfor" value="Groups">
+                <input type="submit" value="Search">
+                <span><a href="newgroup.php">make a new group</a></span>
+            </form>
+            <hr>
             <?php
-                $stmt = $conn->prepare("SELECT * FROM `groups`");
+                $stmt = $conn->prepare("SELECT id, description, author, date, name, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups`");
                 $stmt->execute();
                 $result = $stmt->get_result();
                 
-                while($row = $result->fetch_assoc()) {
-                    echo "<small><a href='viewgroup.php?id=" . $row['id'] . "'>[view group]</a></small> <b>" . $row['name'] . "</b> - " . $row['description'] . "<a style='float: right;' href='joingroup.php?id=" . $row['id'] . "'><button>Join Group</button></a><br><small>" . $row['author'] . "@" . $row['date'] . "</small><hr>";
-                }
+                while($row = $result->fetch_assoc()) 
+                {
+                    $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)'];
+                    if(!$memberCount){ $memberCount = "No"; }
             ?>
+            <small><a href='viewgroup.php?id=<?php echo $row['id']; ?>'>[view group]</a></small> 
+            <b><?php echo $row['name']; ?></b> - <?php echo $row['description']; ?>
+            <a style='float: right;' href='joingroup.php?id=<?php echo $row['id']; ?>'><button>Join Group</button></a>
+            <br>
+            <small>created by <a href="/profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a> @ <?php echo substr($row['date'], 0, -3); ?> &bull; <?php echo $memberCount; ?> member(s)</small>
+            <hr>
+            <?php } ?>
         </div>
     </body>
 </html>
