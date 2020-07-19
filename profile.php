@@ -15,6 +15,7 @@
             if(!mysqli_num_rows($result)){ header("Location: /"); die(); }
             $row = $result->fetch_assoc(); //you dont need to do a while loop because you're only fetching one result
             
+            $badges = strpos($row['ranks'], "dev");
             $id = $_GET['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
@@ -24,6 +25,12 @@
             $music = $row['music'];
             $group = $row['currentgroup'];
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
+
+            if($badges !== false) {
+                $badge = "<img src='badges/dev.png'>";
+            } else {
+                $badge = "";
+            }
 
             if(@$_POST["comment"] && isset($_SESSION['user'])) 
             {
@@ -56,9 +63,9 @@
                     </audio>
                     <br>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="group">
                         <div class="contactInfoTop" style="text-align: center">Contact</div>
-                        <?php if($user != $_SESSION['user'] && isset($_SESSION['user'])){
+                        <?php if(isset($_SESSION['user']) && $user != $_SESSION['user']) {
                         if(!checkIfFriended($user, $_SESSION['user'], $conn)) { ?>
                         <a class='contactbuttons' href='/add.php?id=<?php echo $id; ?>'>Friend User</a>
                         <?php } ?>
@@ -71,9 +78,18 @@
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
-                    </div>
+                    </div><br>
+                    <?php
+                        echo '
+                        <div class="contactInfo" id="badges">
+                            <div class="contactInfoTop">    
+                                <center>Badges</center>
+                            </div>
+                            ' . $badge . '
+                        </div><br>';
+                    ?>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="blogs">
                         <div class="contactInfoTop" style="text-align:center;">Blogs</div>
                     <?php
                         //specify only the columns you need to conserve performace because you dont need to fetch the entire blog post body for the profile
@@ -87,10 +103,10 @@
                     <?php } ?>
                     </div>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="friends">
                         <div class="contactInfoTop" style="text-align: center;">Friends</div>
                         <?php
-                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE sender = ? OR reciever = ? AND status = 'ACCEPTED'");
+                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE (sender = ? OR reciever = ?) AND status = 'ACCEPTED'");
                             $stmt->bind_param("ss", $user, $user);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -110,14 +126,14 @@
                 <br>
                 <div class="RightHandUserInfo">
                     <div id="interests">
-                    <div class="info" style="text-align: center;">Interests</div>
-                    <?php echo $interests; ?>
+                        <div class="info" style="text-align: center;">Interests</div>
+                        <?php echo $interests; ?>
                     </div>
-                    <br>
-                    <br>
+                        <br>
+                        <br>
                     <div id="bio">
-                    <div class="info" style="text-align: center;">Bio</div>
-                    <?php echo $bio; ?>
+                        <div class="info" style="text-align: center;">Bio</div>
+                        <?php echo $bio; ?>
                     </div>
                     <br>
                     <br>

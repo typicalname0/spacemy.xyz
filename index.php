@@ -43,6 +43,11 @@
                             $user = $row['username'];
                             $id = $row['id'];
                             $status = $row['status'];
+                            $badges = strpos($row['ranks'], "dev");
+
+                            if($badges !== false) {
+                                $badge = "<img src='badges/dev.png'>";
+                            }
 
                             echo "<br><br><h1 class='username' style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
                             echo "<img class='pfp' width='235px;' src='pfp/" . $row['pfp'] . "'><hr>";
@@ -52,7 +57,7 @@
                                 <source src="music/' . $row['music'] . '" type="audio/ogg">
                             </audio><br><br>';
                             echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="group">
                             <div class="contactInfoTop">    
                                 <center>Contact</center>
                             </div>
@@ -65,7 +70,7 @@
                         }
                         
                         echo '<br><div class="contactInfo">
-                            <div class="contactInfoTop">    
+                            <div class="contactInfoTop" id="blogs">    
                                 <center>Blogs</center>
                             </div>';
                             $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE author = ?");
@@ -79,7 +84,15 @@
                         echo '</div><br>';
 
                         echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="badges">
+                            <div class="contactInfoTop">    
+                                <center>Badges</center>
+                            </div>
+                            ' . $badge . '
+                        </div><br>';
+
+                        echo '
+                        <div class="contactInfo" id="friends">
                             <div class="contactInfoTop">    
                                 <center>Friends</center>
                             </div>
@@ -106,7 +119,8 @@
 
 
                         echo '</div>';
-
+                        
+                        
                         if(@$_POST["comment"]) {
                             $stmt = $conn->prepare("INSERT INTO `comments` (toid, author, text, date) VALUES (?, ?, ?, now())");
                             $stmt->bind_param("sss", $id, $_SESSION['user'], $text);
@@ -154,14 +168,20 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                             
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<div class='commentRight'>";
-                                    echo "  <small>" . $row['date'] . " <a href='deletecomment.php?id=" . $row['id'] . "'>[delete]</a></small><br>" . $row['text'];
-                                    echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
-                                    echo "  <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
-                                    echo "</div>";
-                                }
-                            ?>
+                                while($row = $result->fetch_assoc()) { ?>
+                                    <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
+                                        <div style="word-wrap: break-word;">
+                                            <small><?php echo $row['date']; ?> <a href="deletecomment.php?id=<?php echo $row['id']; ?>">[delete]</a></small>
+                                            <br>
+                                            <?php echo $row['text']; ?>
+                                        </div>
+                                        <div>
+                                            <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                                            <br>
+                                            <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                         </div>
                     </div>
                 </div>

@@ -1,15 +1,17 @@
 <div class="header">
     <div class="headerTop">
         <a href="index.php"><b>spacemy.xyz</b></a>
+        <input class="search" placeholder="Search" size="90" type="text">
     </div>
     <div class="headerBottom">
         <?php
             if(isset($_SESSION['user'])) {
-                echo ' <small><a href="index.php">Your Account</a> &bull; <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a></small>';
+                echo ' <small><a href="index.php">Your Account</a> &bull; <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a></small>';
             } else {
-                echo ' <small><a href="register.php">Register</a> &bull; <a href="login.php">Login</a> &bull; <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a></small>';
+                echo ' <small><a href="register.php">Register</a> &bull; <a href="login.php">Login</a> &bull; <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a></small>';
             }
-
+        ?>
+        <?php
             if(isset($_SESSION['user'])) {
                 $stmt = $conn->prepare("SELECT * FROM `friends` WHERE reciever = ? AND status='PENDING'");
                 $stmt->bind_param("s", $_SESSION['user']);
@@ -36,5 +38,5 @@
     </div>
 </div>
 <div style="border: 1px solid black;">
-    <center>join the discord - https://discord.gg/SS9KGG</center>
+    <center>join the discord - https://discord.gg/jUbyMh9</center>
 </div>
