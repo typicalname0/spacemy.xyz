@@ -40,7 +40,27 @@
         <div class="container">
             <h1><?php echo $name; ?></h1>
             <?php
-                echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a>";
+                if (isset($_SESSION['user'])) {
+                    $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
+                    $stmt->bind_param("s", $_SESSION['user']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) {
+                        if($row['currentgroup'] === $name) {
+                            echo "<a href='leavegroup.php'><button>Leave Group</button></a><br/><br/>";
+                        }
+                    }
+                }
+                echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
+                echo "Members:<br/>";
+                $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
+                $stmt->bind_param("s", $name);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                
+                while($row = $result->fetch_assoc()) {
+                    echo "<a href='profile.php?id='" . getID($row['id'], $conn) . ">" . $row['username'] . "</a><br/>";
+                }
             ?>
             <pre><?php echo $desc;?></pre>
             <div class="info">
