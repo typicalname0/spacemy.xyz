@@ -15,6 +15,7 @@
             if(!mysqli_num_rows($result)){ header("Location: /"); die(); }
             $row = $result->fetch_assoc(); //you dont need to do a while loop because you're only fetching one result
             
+            $badges = strpos($row['ranks'], "dev");
             $id = $_GET['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
@@ -24,6 +25,12 @@
             $music = $row['music'];
             $group = $row['currentgroup'];
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
+
+            if($badges !== false) {
+                $badge = "<img src='badges/dev.png'>";
+            } else {
+                $badge = "";
+            }
 
             if(@$_POST["comment"] && isset($_SESSION['user'])) 
             {
@@ -58,7 +65,7 @@
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align: center">Contact</div>
-                        <?php if(isset($_SESSION['user'] && $user != $_SESSION['user'])){
+                        <?php if(isset($_SESSION['user']) && $user != $_SESSION['user']) {
                         if(!checkIfFriended($user, $_SESSION['user'], $conn)) { ?>
                         <a class='contactbuttons' href='/add.php?id=<?php echo $id; ?>'>Friend User</a>
                         <?php } ?>
@@ -71,7 +78,16 @@
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
-                    </div>
+                    </div><br>
+                    <?php
+                        echo '
+                        <div class="contactInfo">
+                            <div class="contactInfoTop">    
+                                <center>Badges</center>
+                            </div>
+                            ' . $badge . '
+                        </div><br>';
+                    ?>
                     <br>
                     <div class="contactInfo">
                         <div class="contactInfoTop" style="text-align:center;">Blogs</div>
@@ -110,14 +126,14 @@
                 <br>
                 <div class="RightHandUserInfo">
                     <div id="interests">
-                    <div class="info" style="text-align: center;">Interests</div>
-                    <?php echo $interests; ?>
+                        <div class="info" style="text-align: center;">Interests</div>
+                        <?php echo $interests; ?>
                     </div>
-                    <br>
-                    <br>
+                        <br>
+                        <br>
                     <div id="bio">
-                    <div class="info" style="text-align: center;">Bio</div>
-                    <?php echo $bio; ?>
+                        <div class="info" style="text-align: center;">Bio</div>
+                        <?php echo $bio; ?>
                     </div>
                     <br>
                     <br>

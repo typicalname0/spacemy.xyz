@@ -43,6 +43,11 @@
                             $user = $row['username'];
                             $id = $row['id'];
                             $status = $row['status'];
+                            $badges = strpos($row['ranks'], "dev");
+
+                            if($badges !== false) {
+                                $badge = "<img src='badges/dev.png'>";
+                            }
 
                             echo "<br><br><h1 class='username' style='margin: 0px;'>" . $row['username'] . "</h1><small>" . $status . "</small><br><br>";
                             echo "<img class='pfp' width='235px;' src='pfp/" . $row['pfp'] . "'><hr>";
@@ -81,6 +86,14 @@
                         echo '
                         <div class="contactInfo">
                             <div class="contactInfoTop">    
+                                <center>Badges</center>
+                            </div>
+                            ' . $badge . '
+                        </div><br>';
+
+                        echo '
+                        <div class="contactInfo">
+                            <div class="contactInfoTop">    
                                 <center>Friends</center>
                             </div>
                         ';
@@ -106,7 +119,8 @@
 
 
                         echo '</div>';
-
+                        
+                        
                         if(@$_POST["comment"]) {
                             $stmt = $conn->prepare("INSERT INTO `comments` (toid, author, text, date) VALUES (?, ?, ?, now())");
                             $stmt->bind_param("sss", $id, $_SESSION['user'], $text);
