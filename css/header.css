@@ -10,7 +10,7 @@
     clear: both;
     display: table;
 }
-.header form {float:right;}
+.header form {float:right; display:inline-flex;}
 .headerBottom {
     background-color: #003399;
     width: 100%;
