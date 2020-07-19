@@ -126,11 +126,10 @@
                             
                             while($row = $result->fetch_assoc()) 
                             { 
-                                if($row['sender'] == $user){ $friend = $row['reciever']; }
-                                else{ $friend = $row['sender']; }
+                                if($row['sender'] == $user){ $friend = $row['reciever']; } else{ $friend = $row['sender']; }
+                                echo "<a href='/profile.php?id=".getID($friend, $conn)."'><img width='40px;' src='pfp/".getPFP($friend, $conn)."'></a>";
+                            }
                         ?>
-                        <a href='profile.php?id=<?php echo getID($friend, $conn); ?>'><img width='40px;' src='pfp/<?php echo getPFP($friend, $conn); ?>'></a>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
