@@ -17,7 +17,7 @@
                 <h1>Search results for <?php echo htmlspecialchars($_POST['query']); ?></h1>
                 <h3>Users:</h3>
                 <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
+                    $wc = "%" . htmlspecialchars($_POST['query']) . "%";
                     $stmt = $conn->prepare("SELECT * FROM `users` WHERE username LIKE ?");
                     $stmt->bind_param("s", $wc);
                     $stmt->execute();
@@ -33,7 +33,7 @@
                 ?>
                 <h3>Groups:</h3>
                 <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
+                    $wc = "%" . htmlspecialchars($_POST['query']) . "%";
                     $stmt = $conn->prepare("SELECT * FROM `groups` WHERE name LIKE ?");
                     $stmt->bind_param("s", $wc);
                     $stmt->execute();
@@ -49,7 +49,7 @@
                 ?>
                 <h3>Blogs:</h3>
                 <?php
-                    $wc = htmlspecialchars($_POST['query']) . "%";
+                    $wc = "%" . htmlspecialchars($_POST['query']) . "%";
                     $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE title LIKE ?");
                     $stmt->bind_param("s", $wc);
                     $stmt->execute();
