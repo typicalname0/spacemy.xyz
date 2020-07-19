@@ -1,8 +1,8 @@
 <div class="header">
     <div class="headerTop">
         <a href="index.php"><b>spacemy.xyz</b></a>
-        <form action="/search.php" method="post" class="search" style="display:inline;">
-            <input placeholder="Search" size="50" type="text" name="query">
+        <form action="/search.php" method="post" class="search">
+            <input placeholder="Search" size="90" type="text" name="query">
             <input type="submit" value="Search">
         </form>
     </div>
