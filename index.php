@@ -169,7 +169,7 @@
                             while($row = $result->fetch_assoc()) { ?>
                                 <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
                                     <div style="word-wrap: break-word;">
-                                        <small><?php echo $row['date']; ?></small>
+                                        <small><?php echo $row['date']; ?> <a href="deletecomment.php?id=<?php echo $row['id']; ?>">[delete]</a></small>
                                         <br>
                                         <?php echo $row['text']; ?>
                                     </div>
