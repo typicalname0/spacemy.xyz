@@ -1,6 +1,7 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
+    requireLogin();
 ?>
 <!DOCTYPE html>
 <html>

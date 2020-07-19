@@ -1,6 +1,7 @@
 <?php
 require("func/conn.php");
 require("func/settings.php");
+requireLogin();
 
 if((int)$_GET['id']) {
     $stmt = $conn->prepare("UPDATE friends SET status = 'REVOKED' WHERE id = ?");
