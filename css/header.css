@@ -5,7 +5,12 @@
     background-color: #6699cc;
     width: 100%;
 }
-
+.headerTop::after { /* clearfix */
+    content: "";
+    clear: both;
+    display: table;
+}
+.search {float:right;}
 .headerBottom {
     background-color: #003399;
     width: 100%;

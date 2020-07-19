@@ -1,7 +1,7 @@
 <div class="header">
     <div class="headerTop">
         <a href="index.php"><b>spacemy.xyz</b></a>
-        <input placeholder="Search" size="90" type="text">
+        <input class="search" placeholder="Search" size="90" type="text">
     </div>
     <div class="headerBottom">
         <?php
