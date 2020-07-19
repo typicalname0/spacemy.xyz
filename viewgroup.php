@@ -59,9 +59,9 @@
                 $stmt->bind_param("s", $name);
                 $stmt->execute();
                 $result = $stmt->get_result();
-                
+
                 while($row = $result->fetch_assoc()) {
-                    echo "<a href='profile.php?id='" . $row['id'] . ">" . $row['username'] . "</a><br/>";
+                    echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br/>";
                 }
             ?>
             <pre><?php echo $desc;?></pre>
