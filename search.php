@@ -36,7 +36,7 @@
                 $stmt->bind_param("s", $sqlquery);
                 $stmt->execute();
                 $result = $stmt->get_result();
-            }
+            } else { header("Location: /"); }
         ?>
         <div class="container">
             <h1><?php echo $queryfor ?> results for <u><?php echo $query; ?></u> (<?php echo $result->num_rows; ?>)</h1>
