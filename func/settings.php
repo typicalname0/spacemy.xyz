@@ -20,7 +20,7 @@ function validateCSS($validate) {
 
 function requireLogin()
 {
-	if(!isset($_SESSION['user'])){ header("Location: /login.php"); }
+	if(!isset($_SESSION['user'])){ header("Location: /login.php"); die(); }
 }
 
 function getID($user, $connection) {
