@@ -1,7 +1,10 @@
 <div class="header">
     <div class="headerTop">
         <a href="index.php"><b>spacemy.xyz</b></a>
-        <input class="search" placeholder="Search" size="90" type="text">
+        <form action="/search.php" method="post" class="search" style="display:inline;">
+            <input placeholder="Search" size="50" type="text" name="query">
+            <input type="submit" value="Search">
+        </form>
     </div>
     <div class="headerBottom">
         <?php
