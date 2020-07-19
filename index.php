@@ -38,15 +38,16 @@
     <body>
         <?php require("header.php"); ?>
         <div class="container">
-            <div class="left" style="position:fixed;left:0;width:15%;padding:10px;">
-                Welcome, <?php echo $user; ?>!
+            <button style="position:fixed;left:0;display:none;" id="show-welcome" onclick="document.getElementById('welcome').style.display = ''; document.getElementById('show-welcome').style.display = 'none';">Show Panel</button>
+            <div class="left" style="position:fixed;left:0;width:15%;padding:10px;" id="welcome">
+                Welcome, <?php echo $user; ?>! <button onclick="document.getElementById('welcome').style.display = 'none'; document.getElementById('show-welcome').style.display = '';">Hide Panel</button>
                 <hr>
                 <div class="info">
                     Latest Blog Posts
                 </div>
                 <br>
                 <?php
-                    $result = $conn->query("SELECT id, title, author FROM blogs ORDER BY id DESC LIMIT 5");
+                    $result = $conn->query("SELECT id, title, author FROM `blogs` ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
                         echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
@@ -61,13 +62,15 @@
                 </div>
                 <br>
                 <?php
-                    $stmt = $conn->prepare("SELECT id, name FROM groups WHERE NOT author = ? ORDER BY RAND() LIMIT 5");
+                    $stmt = $conn->prepare("SELECT id, name, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE NOT author = ? ORDER BY RAND() LIMIT 5");
                     $stmt->bind_param("s", $user);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     while($row = $result->fetch_assoc()) 
                     {
-                        echo "<a href='/viewgroup.php?id=".$row['id']."'>".$row['name']."</a><br><br>";
+                        $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)']; //cant really do this any other way lol
+                        if(!$memberCount){ $memberCount = "No"; }
+                        echo "<a href='/viewgroup.php?id=".$row['id']."'>".$row['name']."</a> - ".$memberCount." member(s)<br><br>";
                     }
                 ?>
                 <a href="/groups.php">[ View more groups ]</a>
