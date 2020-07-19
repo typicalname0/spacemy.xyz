@@ -18,6 +18,11 @@ function validateCSS($validate) {
     return $validated;
 }
 
+function requireLogin()
+{
+	if(!isset($_SESSION['user'])){ header("Location: /login.php"); }
+}
+
 function getID($user, $connection) {
 	$stmt = $connection->prepare("SELECT * FROM users WHERE username = ?");
 	$stmt->bind_param("s", $user);
