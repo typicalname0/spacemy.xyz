@@ -1,8 +1,0 @@
-{
-    "name": "typicalname0/spacemy.xyz",
-    "description": "...yet another mysqli php myspace clone",
-    "type": "project",
-    "license": "a",
-    "minimum-stability": "dev",
-    "require": {}
-}
