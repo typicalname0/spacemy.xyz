@@ -63,7 +63,7 @@
                     </audio>
                     <br>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="group">
                         <div class="contactInfoTop" style="text-align: center">Contact</div>
                         <?php if(isset($_SESSION['user']) && $user != $_SESSION['user']) {
                         if(!checkIfFriended($user, $_SESSION['user'], $conn)) { ?>
@@ -81,7 +81,7 @@
                     </div><br>
                     <?php
                         echo '
-                        <div class="contactInfo">
+                        <div class="contactInfo" id="badges">
                             <div class="contactInfoTop">    
                                 <center>Badges</center>
                             </div>
@@ -89,7 +89,7 @@
                         </div><br>';
                     ?>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="blogs">
                         <div class="contactInfoTop" style="text-align:center;">Blogs</div>
                     <?php
                         //specify only the columns you need to conserve performace because you dont need to fetch the entire blog post body for the profile
@@ -103,7 +103,7 @@
                     <?php } ?>
                     </div>
                     <br>
-                    <div class="contactInfo">
+                    <div class="contactInfo" id="friends">
                         <div class="contactInfoTop" style="text-align: center;">Friends</div>
                         <?php
                             $stmt = $conn->prepare("SELECT * FROM `friends` WHERE (sender = ? OR reciever = ?) AND status = 'ACCEPTED'");
