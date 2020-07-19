@@ -51,6 +51,8 @@
                         }
                     }
                 }
+            ?>
+            <?php
                 echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
                 echo "Members:<br/>";
                 $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
@@ -59,7 +61,7 @@
                 $result = $stmt->get_result();
                 
                 while($row = $result->fetch_assoc()) {
-                    echo "<a href='profile.php?id='" . getID($row['id'], $conn) . ">" . $row['username'] . "</a><br/>";
+                    echo "<a href='profile.php?id='" . $row['id'] . ">" . $row['username'] . "</a><br/>";
                 }
             ?>
             <pre><?php echo $desc;?></pre>
