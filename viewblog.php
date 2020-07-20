@@ -26,7 +26,7 @@
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            echo "<style>".$row['css']."</style>";
+            if(mysqli_num_rows($result)){ echo "<style>".$row['css']."</style>"; }
 
             if(@$_POST["comment"]) {
                 $stmt = $conn->prepare("INSERT INTO `blogcomments` (toid, author, text, date) VALUES (?, ?, ?, now())");
