@@ -8,15 +8,13 @@ if((int)$_GET['id']) {
     $stmt->bind_param("i", $_GET['id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    while($row = $result->fetch_assoc()) {
-        $groupname = $row['name'];
-    }
 
-    $stmt = $conn->prepare("UPDATE users SET currentgroup = ? WHERE username = ?");
-    $stmt->bind_param("ss", $groupname, $_SESSION['user']);
-    $stmt->execute();
-    $stmt->close();
+    if($results->num_rows) {    
+        $stmt = $conn->prepare("UPDATE users SET currentgroup = ? WHERE username = ?");
+        $stmt->bind_param("ss", $_GET['id'], $_SESSION['user']);
+        $stmt->execute();
+        $stmt->close();
+    }
 
     header("Location: groups.php");
 }

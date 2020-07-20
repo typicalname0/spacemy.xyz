@@ -24,6 +24,14 @@
             $pfp = $row['pfp'];
             $music = $row['music'];
             $group = $row['currentgroup'];
+            if($group !== "") { // let this serve as a reminder that Typical fucked up
+                $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
+                $stmt->bind_param("i", $group);
+                $stmt->execute();
+
+                $row = $stmt->get_result()->fetch_assoc();
+                $groupname = $row['name'];
+            } else {$groupname = "None";}
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
 
             if($badges !== false) {
@@ -78,7 +86,7 @@
                         <br>
                         <?php } ?>
                         <div style="text-align:center;">
-                            Current Group: <b><?php echo $group; ?></b>
+                            Current Group: <b><a href="/viewgroup.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
