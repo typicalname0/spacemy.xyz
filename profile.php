@@ -92,15 +92,12 @@
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
                     </div><br>
-                    <?php
-                        echo '
                         <div class="contactInfo" id="badges">
                             <div class="contactInfoTop">    
                                 <center>Badges</center>
                             </div>
-                            ' . $badge . '
-                        </div><br>';
-                    ?>
+                            <?php echo $badge; ?>
+                        </div><br>
                     <br>
                     <div class="contactInfo" id="blogs">
                         <div class="contactInfoTop" style="text-align:center;">Blogs</div>
