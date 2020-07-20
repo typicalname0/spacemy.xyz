@@ -9,13 +9,14 @@ if((int)$_GET['id']) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if($results->num_rows) {    
+    if($result->num_rows === 0) { 
+        exit('group dont exist'); 
+    } else {
         $stmt = $conn->prepare("UPDATE users SET currentgroup = ? WHERE username = ?");
-        $stmt->bind_param("ss", $_GET['id'], $_SESSION['user']);
+        $stmt->bind_param("is", $_GET['id'], $_SESSION['user']);
         $stmt->execute();
         $stmt->close();
     }
-
     header("Location: groups.php");
 }
 ?>

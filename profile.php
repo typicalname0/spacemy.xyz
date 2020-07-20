@@ -20,6 +20,7 @@
             $bio = $row['bio'];
             $interests = $row['interests'];
             $user = $row['username'];
+            $css = $row['css'];
             $status = $row['status'];
             $pfp = $row['pfp'];
             $music = $row['music'];
@@ -55,7 +56,7 @@
         <meta property="og:title" content="<?php echo $user; ?>"/>
         <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
         <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
-        <style><?php echo $row['css']; ?></style>
+        <style><?php echo $css; ?></style>
     </head>
     <body>
         <?php require("header.php"); ?>
