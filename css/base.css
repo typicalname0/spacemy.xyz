@@ -29,11 +29,11 @@ audio {
 }
 
 .commentLeft {
-    background-color: #fc9;
+/*    background-color: #fc9;*/
 }
 
 .commentRight {
-    background-color: #f93;
+/*    background-color: #f93;*/
     display: grid;
     grid-template-columns: 75% auto;
     margin-bottom: 1px;
