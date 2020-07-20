@@ -14,7 +14,13 @@
         ?>
         <div class="container">
             <h1>Blogs [wip]</h1>
-            <a href="newblog.php">make a new blog</a><br><hr>
+            <form action="/search.php" method="post" class="search">
+                <input placeholder="Search for blogs..." size="59" type="text" name="query">
+                <input type="hidden" name="queryfor" value="Blogs">
+                <input type="submit" value="Search">
+                <span><a href="newblog.php">make a new blog</a></span>
+            </form>
+            <hr>
             <?php
                 $stmt = $conn->prepare("SELECT * FROM `blogs`");
                 $stmt->execute();

@@ -12,6 +12,7 @@
             $stmt->bind_param("i", $_GET['id']);
             $stmt->execute();
             $result = $stmt->get_result();
+            if(!mysqli_num_rows($result)){ header("Location: /blogs.php"); die(); }
             
             while($row = $result->fetch_assoc()) {
                 $name = $row['title'];
@@ -19,6 +20,13 @@
                 $author = $row['author'];
                 $date = $row['date'];
             }
+
+            $stmt = $conn->prepare("SELECT css FROM `users` WHERE username = ?");
+            $stmt->bind_param("s", $author);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            echo "<style>".$row['css']."</style>";
 
             if(@$_POST["comment"]) {
                 $stmt = $conn->prepare("INSERT INTO `blogcomments` (toid, author, text, date) VALUES (?, ?, ?, now())");
@@ -38,33 +46,47 @@
         ?>
         <div class="container">
             <h1><?php echo $name; ?></h1>
-            <?php
-                echo $author . "@" . $date . "<hr>";
-                echo $desc;
-            ?>
-            <br><hr>
-            <?php if ($author === $_SESSION['user']) {
-                echo "<a href='/deleteblog.php?id=" . $_GET['id'] . "'><button>Delete blog</button></a><br/><br/>";
-            }?>
-            <form method="post" enctype="multipart/form-data">
-				<textarea required rows="5" cols="77" placeholder="Comment" name="comment"></textarea><br>
-				<input name="submit" type="submit" value="Post"> <small>max limit: 500 characters</small>
-            </form>
-            <br>
+            <div class='commentRight' style='display: grid; grid-template-columns: 25% auto; padding:5px;'>
+                <div>
+                    <a style='float: left;' href='profile.php?id=<?php echo getID($author, $conn); ?>'><?php echo $author; ?></a>
+                    <br>
+                    <img class='commentPictures' style='float: left; height:160px; width:160px' src='pfp/<?php echo getPFP($author, $conn); ?>'>
+                </div>
+                <div style="word-wrap: break-word; padding-left:20px;">
+                    <small><?php echo $date; ?> | <a href="#comment"><button>Comment</button></a></small>
+                    <br>
+                    <?php echo $desc; ?>
+                </div>
+            </div>
+            <hr>
             <?php
                 $stmt = $conn->prepare("SELECT * FROM `blogcomments` WHERE toid = ?");
                 $stmt->bind_param("s", $_GET['id']);
                 $stmt->execute();
                 $result = $stmt->get_result();
-                
-                while($row = $result->fetch_assoc()) {
-                    echo "<div class='commentRight'>";
-                    echo "  <small>" . $row['date'] . "</small><br>" . $row['text'];
-                    echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
-                    echo "  <img class='commentPictures' style='float: right;' height='80px' width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
-                    echo "</div>";
-                }
             ?>
+            <div class="commentsList">
+                <?php while($row = $result->fetch_assoc()) { ?>
+                <div class='commentRight' style='display: grid; grid-template-columns: auto 85%; padding:5px;'>
+                    <div>
+                        <a style='float: left;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                        <br>
+                        <img class='commentPictures' style='float: left;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                    </div>
+                    <div style="word-wrap: break-word;">
+                        <small><?php echo $row['date']; ?></small>
+                        <br>
+                        <?php echo $row['text']; ?>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <br>
+            <form method="post" enctype="multipart/form-data" id="comment">
+                <textarea required rows="5" cols="77" placeholder="Comment on this blog post..." name="comment"></textarea><br>
+                <input name="submit" type="submit" value="Post"> <small>max limit: 500 characters</small>
+            </form>
+            <br>
         </div>
     </body>
 </html>

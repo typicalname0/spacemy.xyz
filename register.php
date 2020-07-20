@@ -5,9 +5,14 @@
     {
         $email = htmlspecialchars(@$_POST['email']);
         $username = htmlspecialchars(@$_POST['username']);
-        $password = password_hash(@$_POST['password'], PASSWORD_DEFAULT);
+        $password = @$_POST['password'];
+        $passwordhash = password_hash(@$password, PASSWORD_DEFAULT);
+
+        if($_POST['password'] !== $_POST['confirm']){ $error = "password and confirmation password do not match"; goto skip; }
 
         if(strlen($username) > 21) { $error = "your username must be shorter than 21 characters"; goto skip; }
+        if(strlen($password) < 8) { $error = "your password must be at least 8 characters long"; goto skip; }
+        if(!preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $password)) { $error = "please include both letters and numbers in your password"; goto skip; }
 
         $stmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
@@ -20,12 +25,10 @@
         $stmt->execute();
         $result = $stmt->get_result();
         if($result->num_rows) { $error = "there's already a user with that same email!"; goto skip; }
-
-        if($_POST['password'] !== $_POST['confirm']){ $error = "password and confirmation password do not match"; goto skip; }
                 
         //TODO: add cloudflare ip thing 
         $stmt = $conn->prepare("INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES (?, ?, ?, now())");
-        $stmt->bind_param("sss", $username, $email, $password);
+        $stmt->bind_param("sss", $username, $email, $passwordhash);
         $stmt->execute();
                             
         $stmt->close();
