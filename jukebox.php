@@ -19,6 +19,7 @@
                     $stmt->bind_param("i", $_GET['id']);
                     $stmt->execute();
                     $result = $stmt->get_result();
+                    if(!mysqli_num_rows($result)){ header("Location: /jukebox.php"); die(); }
                     
                     while($row = $result->fetch_assoc()) {
                         echo '<h1 style="margin: 0px;display: inline-block;">' . $row['username'] . '</h1> - ' . $row['music'] . '<br>

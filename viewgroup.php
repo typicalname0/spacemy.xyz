@@ -16,6 +16,7 @@
             $stmt->bind_param("i", $_GET['id']);
             $stmt->execute();
             $result = $stmt->get_result();
+            if(!mysqli_num_rows($result)){ header("Location: /groups.php"); die(); }
             
             while($row = $result->fetch_assoc()) {
                 $name = $row['name'];

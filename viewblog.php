@@ -12,6 +12,7 @@
             $stmt->bind_param("i", $_GET['id']);
             $stmt->execute();
             $result = $stmt->get_result();
+            if(!mysqli_num_rows($result)){ header("Location: /blogs.php"); die(); }
             
             while($row = $result->fetch_assoc()) {
                 $name = $row['title'];
