@@ -34,7 +34,10 @@ audio {
 
 .commentRight {
     background-color: #f93;
+    display: grid;
+    grid-template-columns: 75% auto;
     margin-bottom: 1px;
+    padding: 5px;
 }
 
 .commentRight img{
