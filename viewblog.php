@@ -60,16 +60,16 @@
             ?>
             <div class="commentsList">
                 <?php while($row = $result->fetch_assoc()) { ?>
-                <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
+                <div class='commentRight' style='display: grid; grid-template-columns: auto 85%; padding:5px;'>
+                    <div>
+                        <a style='float: left;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                        <br>
+                        <img class='commentPictures' style='float: left;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                    </div>
                     <div style="word-wrap: break-word;">
                         <small><?php echo $row['date']; ?></small>
                         <br>
                         <?php echo $row['text']; ?>
-                    </div>
-                    <div>
-                        <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
-                        <br>
-                        <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
                     </div>
                 </div>
                 <?php } ?>
