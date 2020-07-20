@@ -21,9 +21,7 @@
                 if(strlen($_POST['groupname']) > 32){ $error = "blog title must be shorter than 32 characters"; goto skip; }
                 if(strlen($_POST['desc']) > 500){ $error = "blog body must be shorter than 500 characters"; goto skip; }
                 if(!$_POST['g-recaptcha-response']){ $error = "captcha validation failed"; goto skip; }
-
-                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.CAPTCHA_PRIVATEKEY.'&response='.$_POST['g-recaptcha-response']);
-                $responseData = json_decode($verifyResponse);
+                if(!validateCaptcha(CAPTCHA_PRIVATEKEY, $_POST['g-recaptcha-response'])) { $error = "captcha validation failed"; goto skip; }
 
                 if(!$responseData->success) { $error = "captcha validation failed"; goto skip; }
 
