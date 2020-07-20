@@ -178,14 +178,15 @@
                     <div class="info">
                         Users
                     </div>
-                    <br>
-                    <?php
-                        $stmt = $conn->prepare("SELECT * FROM `users`");
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while($row = $result->fetch_assoc()) { ?>
-                        <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
-                    <?php } ?>
+                    <div class="usersListInner">
+                        <?php
+                            $stmt = $conn->prepare("SELECT * FROM `users`");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()) { ?>
+                            <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
         </div>
