@@ -22,10 +22,23 @@
             $interests = $row['interests'];
             $user = $row['username'];
             $status = $row['status'];
+            $css = $row['css'];
             $pfp = $row['pfp'];
             $music = $row['music'];
             $group = $row['currentgroup'];
             $url = "https://".$_SERVER['HTTP_HOST']."/profile.php?id=".$id;
+
+            $stmt->close();
+
+            if($group !== "") { // let this serve as a reminder that Typical fucked up
+                $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
+                $stmt->bind_param("i", $group);
+                $stmt->execute();
+
+                $row = $stmt->get_result()->fetch_assoc();
+                $groupname = $row['name'];
+            } else {$groupname = "None";}
+            
 
             if($badges !== false) {
                 $badge = "<img src='badges/dev.png'>";
@@ -33,10 +46,10 @@
                 $badge = "";
             }
         ?>
-        <style><?php echo $row['css']; ?></style>
+        <style><?php echo $css; ?></style>
     </head>
     <body>
-        <?php require("header.php"); ?>
+        <?php require("header.php");?>
         <div class="container">
             <button style="position:fixed;left:0;display:none;" id="show-welcome" onclick="document.getElementById('welcome').style.display = ''; document.getElementById('show-welcome').style.display = 'none';">Show Panel</button>
             <div class="left" style="position:fixed;left:0;width:15%;padding:10px;" id="welcome">
@@ -94,7 +107,7 @@
                     <br>
                     <div class="contactInfo" id="group">
                         <div style="text-align:center;">
-                            Current Group: <b><?php echo $group; ?></b>
+                            Current Group: <b><a href="/viewgroup.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>

@@ -22,13 +22,17 @@
             </form>
             <hr>
             <?php
-                $stmt = $conn->prepare("SELECT id, description, author, date, name, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups`");
+                $stmt = $conn->prepare("SELECT id, description, author, date, name FROM `groups`");
                 $stmt->execute();
                 $result = $stmt->get_result();
+                $stmt->close();
                 
                 while($row = $result->fetch_assoc()) 
                 {
-                    $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)'];
+                    $stmt = $conn->prepare("SELECT COUNT(*) FROM `users` WHERE currentgroup = ?");
+                    $stmt->bind_param("s", $row['id']);
+                    $stmt->execute();
+                    $memberCount = $stmt->get_result()->fetch_assoc()['COUNT(*)'];;
                     if(!$memberCount){ $memberCount = "No"; }
             ?>
             <small><a href='viewgroup.php?id=<?php echo $row['id']; ?>'>[view group]</a></small> 

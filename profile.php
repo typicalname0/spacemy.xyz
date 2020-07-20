@@ -20,10 +20,19 @@
             $bio = $row['bio'];
             $interests = $row['interests'];
             $user = $row['username'];
+            $css = $row['css'];
             $status = $row['status'];
             $pfp = $row['pfp'];
             $music = $row['music'];
             $group = $row['currentgroup'];
+            if($group !== "") { // let this serve as a reminder that Typical fucked up
+                $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
+                $stmt->bind_param("i", $group);
+                $stmt->execute();
+
+                $row = $stmt->get_result()->fetch_assoc();
+                $groupname = $row['name'];
+            } else {$groupname = "None";}
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
 
             if($badges !== false) {
@@ -47,7 +56,7 @@
         <meta property="og:title" content="<?php echo $user; ?>"/>
         <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
         <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
-        <style><?php echo $row['css']; ?></style>
+        <style><?php echo $css; ?></style>
     </head>
     <body>
         <?php require("header.php"); ?>
@@ -78,20 +87,17 @@
                         <br>
                         <?php } ?>
                         <div style="text-align:center;">
-                            Current Group: <b><?php echo $group; ?></b>
+                            Current Group: <b><a href="/viewgroup.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
                     </div><br>
-                    <?php
-                        echo '
                         <div class="contactInfo" id="badges">
                             <div class="contactInfoTop">    
                                 <center>Badges</center>
                             </div>
-                            ' . $badge . '
-                        </div><br>';
-                    ?>
+                            <?php echo $badge; ?>
+                        </div><br>
                     <br>
                     <div class="contactInfo" id="blogs">
                         <div class="contactInfoTop" style="text-align:center;">Blogs</div>

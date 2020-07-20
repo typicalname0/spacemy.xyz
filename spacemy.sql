@@ -58,7 +58,7 @@ CREATE TABLE `users` (
   `css` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `music` varchar(255) NOT NULL DEFAULT 'default.mp3',
   `pfp` varchar(255) NOT NULL DEFAULT 'default.jpg',
-  `currentgroup` varchar(255) NOT NULL DEFAULT 'None',
+  `currentgroup` int NOT NULL,
   `id` int NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

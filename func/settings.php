@@ -12,7 +12,7 @@ if(DEBUG == true) {
 }
 
 function validateCSS($validate) {
-	$searchVal = array("<", ">", "<?php", "?>", "behavior: url"); 
+	$searchVal = array("<", ">", "<?php", "?>", "behavior: url", ".php"); 
 	$replaceVal = array("", "", "", "", "", ""); 
 	$validated = str_replace($searchVal, $replaceVal, $validate); 
     return $validated;
