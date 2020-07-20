@@ -21,6 +21,13 @@
                 $date = $row['date'];
             }
 
+            $stmt = $conn->prepare("SELECT css FROM `users` WHERE username = ?");
+            $stmt->bind_param("s", $author);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            echo "<style>".$row['css']."</style>";
+
             if(@$_POST["comment"]) {
                 $stmt = $conn->prepare("INSERT INTO `blogcomments` (toid, author, text, date) VALUES (?, ?, ?, now())");
                 $stmt->bind_param("sss", $_GET['id'], $_SESSION['user'], $text);
