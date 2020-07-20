@@ -11,7 +11,7 @@ if((int)$_GET['id']) {
 
     if($results->num_rows) {    
         $stmt = $conn->prepare("UPDATE users SET currentgroup = ? WHERE username = ?");
-        $stmt->bind_param("ss", $_GET['id'], $_SESSION['user']);
+        $stmt->bind_param("is", $_GET['id'], $_SESSION['user']);
         $stmt->execute();
         $stmt->close();
     }
