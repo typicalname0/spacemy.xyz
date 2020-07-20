@@ -43,6 +43,9 @@
                 echo $desc;
             ?>
             <br><hr>
+            <?php if ($author === $_SESSION['user']) {
+                echo "<a href='/deleteblog.php?id=" . $_GET['id'] . "'><button>Delete blog</button></a><br/><br/>";
+            }?>
             <form method="post" enctype="multipart/form-data">
 				<textarea required rows="5" cols="77" placeholder="Comment" name="comment"></textarea><br>
 				<input name="submit" type="submit" value="Post"> <small>max limit: 500 characters</small>

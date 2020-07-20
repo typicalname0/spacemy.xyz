@@ -43,6 +43,10 @@
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
             }
         ?>
+        <meta property="og:site_name" content="spacemy.xyz"/>
+        <meta property="og:title" content="<?php echo $user; ?>"/>
+        <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
+        <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
         <style><?php echo $row['css']; ?></style>
     </head>
     <body>
@@ -174,14 +178,15 @@
                     <div class="info">
                         Users
                     </div>
-                    <br>
-                    <?php
-                        $stmt = $conn->prepare("SELECT * FROM `users`");
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while($row = $result->fetch_assoc()) { ?>
-                        <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
-                    <?php } ?>
+                    <div class="usersListInner">
+                        <?php
+                            $stmt = $conn->prepare("SELECT * FROM `users`");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()) { ?>
+                            <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
         </div>
