@@ -43,6 +43,7 @@
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
             }
         ?>
+        <meta property="og:site_name" content="spacemy.xyz"/>
         <meta property="og:title" content="<?php echo $user; ?>"/>
         <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
         <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
