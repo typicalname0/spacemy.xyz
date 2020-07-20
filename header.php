@@ -1,8 +1,8 @@
 <div class="header">
     <div class="headerTop">
-        <a href="index.php"><b>spacemy.xyz</b></a>
+        <a href="/"><b>spacemy.xyz</b></a>
         <form action="/search.php" method="post" class="search">
-            <input placeholder="Search" size="90" type="text" name="query">
+            <input placeholder="Search" type="text" name="query">
             <select name="queryfor">
                 <option value="Users">Users</option>
                 <option value="Groups">Groups</option>

@@ -18,12 +18,12 @@
                 switch($_POST['queryfor'])
                 {
                     case "Groups":
-                        $stmt = $conn->prepare("SELECT id, name FROM `groups` WHERE name LIKE ?");
+                        $stmt = $conn->prepare("SELECT id, name, description, author, date, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE name LIKE ?");
                         $queryfor = "Group";
                         break;
                     
                     case "Blogs":
-                        $stmt = $conn->prepare("SELECT id, title FROM `blogs` WHERE title LIKE ?");
+                        $stmt = $conn->prepare("SELECT id, title, date, author FROM `blogs` WHERE title LIKE ?");
                         $queryfor = "Blog";
                         break;
 
@@ -40,17 +40,26 @@
         ?>
         <div class="container">
             <h1><?php echo $queryfor ?> results for <u><?php echo $query; ?></u> (<?php echo $result->num_rows; ?>)</h1>
+            <hr>
             <?php 
                 while($row = $result->fetch_assoc())
                 {
                     switch($_POST['queryfor'])
                     {
-                        case "Groups":
-                            echo "<a href='viewgroup.php?id=".$row['id']."'>".$row['name']."</a><br>";
-                            break;
+                        case "Groups": 
+                            $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)'];
+                            if(!$memberCount){ $memberCount = "No"; }
+                    ?>
+                        <small><a href='viewgroup.php?id=<?php echo $row['id']; ?>'>[view group]</a></small> 
+                        <b><?php echo $row['name']; ?></b> - <?php echo $row['description']; ?>
+                        <a style='float: right;' href='joingroup.php?id=<?php echo $row['id']; ?>'><button>Join Group</button></a>
+                        <br>
+                        <small>created by <a href="/profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a> @ <?php echo substr($row['date'], 0, -3); ?> &bull; <?php echo $memberCount; ?> member(s)</small>
+                        <hr>
+                    <?php   break;
                         
                         case "Blogs":
-                            echo "<a href='viewblog.php?id=".$row['id']."'>".$row['title']."</a><br>";
+                            echo "<b>".$row['title']."</b> - ".$row['author']."@".$row['date']." <a style='float: right;' href='viewblog.php?id=".$row['id']."'><small>[view]</small></a><hr>";
                             break;
 
                         default:
