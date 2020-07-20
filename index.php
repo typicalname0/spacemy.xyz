@@ -7,6 +7,8 @@
     <head>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <?php
             if(!isset($_SESSION['user'])){ header("Location: /landing.php"); die(); }
             $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
@@ -167,9 +169,9 @@
                     <br>
                     <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
-                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data" id="submitform">
                             <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
-                            <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
+                            <input type="submit" value="Post" class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="onLogin"> <small>max limit: 500 characters | bbcode supported</small>
                         </form>
                         <hr>
                         <div class="commentsList">

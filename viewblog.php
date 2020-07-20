@@ -7,6 +7,8 @@
     <head>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <?php
             $stmt = $conn->prepare("SELECT * FROM `blogs` WHERE id = ?");
             $stmt->bind_param("i", $_GET['id']);
@@ -28,16 +30,22 @@
             $row = $result->fetch_assoc();
             if(mysqli_num_rows($result)){ echo "<style>".$row['css']."</style>"; }
 
-            if(@$_POST["comment"]) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') 
+            {
+                if(!isset($_SESSION['user'])){ $error = "you are not logged in"; goto skipcomment; }
+                if(!$_POST['comment']){ $error = "your comment cannot be blank"; goto skipcomment; }
+                if(strlen($_POST['comment']) > 500){ $error = "your comment must be shorter than 500 characters"; goto skipcomment; }
+                if(!isset($_POST['g-recaptcha-response'])){ $error = "captcha validation failed"; goto skipcomment; }
+                if(!validateCaptcha(CAPTCHA_PRIVATEKEY, $_POST['g-recaptcha-response'])) { $error = "captcha validation failed"; goto skipcomment; }
+
                 $stmt = $conn->prepare("INSERT INTO `blogcomments` (toid, author, text, date) VALUES (?, ?, ?, now())");
                 $stmt->bind_param("sss", $_GET['id'], $_SESSION['user'], $text);
-            
                 $unprocessedText = replaceBBcodes($_POST['comment']);
                 $text = str_replace(PHP_EOL, "<br>", $unprocessedText);
                 $stmt->execute();
-            
                 $stmt->close();
             }
+            skipcomment:
         ?>
     </head>
     <body>
@@ -82,10 +90,15 @@
                 <?php } ?>
             </div>
             <br>
-            <form method="post" enctype="multipart/form-data" id="comment">
+            <?php if(isset($_SESSION['user'])){ ?>
+            <?php if(isset($error)) { echo "<small style='color:red'>".$error."</small>"; } ?>
+            <form method="post" enctype="multipart/form-data" id="submitform">
                 <textarea required rows="5" cols="77" placeholder="Comment on this blog post..." name="comment"></textarea><br>
-                <input name="submit" type="submit" value="Post"> <small>max limit: 500 characters</small>
+                <input type="submit" value="Post" class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="onLogin"> <small>max limit: 500 characters</small>
             </form>
+            <?php } else {?>
+            <a href="/login.php">Log in</a> to post comments
+            <?php } ?>
             <br>
         </div>
     </body>
