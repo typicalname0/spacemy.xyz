@@ -45,7 +45,7 @@
         ?>
         <meta property="og:title" content="<?php echo $user; ?>"/>
         <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
-        <meta property="og:description" content="<?php echo str_replace("<br>", PHP_EOL, $bio); ?>" />
+        <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
         <style><?php echo $row['css']; ?></style>
     </head>
     <body>
