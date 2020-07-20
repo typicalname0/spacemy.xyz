@@ -70,26 +70,18 @@
                     
                     while($row = $result->fetch_assoc()) {
                         echo "<div class='commentRight'>";
-                        echo "  <small>" . $row['date'] . "</small><br>" . $row['text'];
-                        echo "  <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
-                        echo "  <img class='commentPictures' style='float: right;' width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
+                        echo "  <div>";
+                        echo "    <small>" . $row['date'] . "</small><br>" . $row['text'];
+                        echo "  </div>";
+                        echo "  <div>";
+                        echo "    <a style='float: right;' href='profile.php?id=" . getID($row['author'], $conn) . "'>" . $row['author'] . "</a> <br>";
+                        echo "    <img class='commentPictures' style='float: right;' width='80px;'src='pfp/" . getPFP($row['author'], $conn) . "'><br><br><br><br><br>";
+                        echo "  </div>";
                         echo "</div>";
                     }
                  ?>
             </div>
             <div id="right">
-                <?php
-                    echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
-                    echo "Members:<br/>";
-                    $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
-                    $stmt->bind_param("s", $_GET['id']);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br/>";
-                    }
-                ?><br/>
                 <?php
                     if (isset($_SESSION['user'])) {
                         $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
@@ -97,8 +89,10 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while ($row = $result->fetch_assoc()) {
-                            if($row['currentgroup'] === $name) {
+                            if($row['currentgroup'] == $_GET['id']) {
                                 echo "<a href='leavegroup.php'><button>Leave Group</button></a>";
+                            } else {
+                                echo "<a href='joingroup.php?id=" . $_GET['id'] . "'><button>Join Group</button></a>";
                             }
                             if($author === $_SESSION['user']) {?>
                                 <br/><br/>
@@ -109,8 +103,20 @@
                                 </form>
                             <?php
                             }
-                            if ($row['currentgroup'] === $name || $author === $_SESSION['user']) {echo "<br/>";}
+                            if ($row['currentgroup'] === $_GET['id'] || $author === $_SESSION['user']) {echo "<br/>";}
                         }
+                    }
+                ?>
+                <?php
+                    echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
+                    echo "Members:<br/>";
+                    $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
+                    $stmt->bind_param("s", $_GET['id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while($row = $result->fetch_assoc()) {
+                        echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br/>";
                     }
                 ?>
             </div>
