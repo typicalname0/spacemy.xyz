@@ -107,7 +107,7 @@
                     <br>
                     <div class="contactInfo" id="group">
                         <div style="text-align:center;">
-                            Current Group: <b><a href="/viewgroup.php?id=<?php $group;?>"><?php echo $groupname; ?></a></b>
+                            Current Group: <b><a href="/viewgroup.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>
