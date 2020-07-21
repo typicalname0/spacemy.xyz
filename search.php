@@ -51,7 +51,14 @@
         <div class="container">
             <h1><?php echo $queryfor ?> results for <u><?php echo $query; ?></u> (<?php echo $result->num_rows; ?>)</h1>
             <hr>
-            <?php 
+            <?php
+                for ($i=1; $i<$pgs or $i<9; $i++) {
+                    echo "<a href='search.php?queryfor=$queryfor&query=$query&pg=$i'>$i</a>\" \"";
+                }
+                if ($i !== $pgs){
+                    echo "<a href='search.php?queryfor=$queryfor&query=$query&pg=$pgs'> ..$pgs</a>";
+                }
+                echo "<br>";
                 while($row = $result->fetch_assoc())
                 {
                     switch($_GET['queryfor'])
