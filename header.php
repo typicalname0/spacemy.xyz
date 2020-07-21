@@ -1,7 +1,7 @@
 <div class="header">
     <div class="headerTop">
         <a href="/"><b>spacemy.xyz</b></a>
-        <form action="/search.php" method="post" class="search">
+        <form action="/search.php" method="get" class="search">
             <input placeholder="Search" type="text" name="query">
             <select name="queryfor">
                 <option value="Users">Users</option>
