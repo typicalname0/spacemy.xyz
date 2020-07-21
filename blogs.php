@@ -11,21 +11,21 @@
     <body>
         <?php
             require("header.php");
-                if(isset($_GET['page'])){ $page = $_GET['page']; }
-                else{ $page = 1; }
-                if(!filter_var($page, FILTER_VALIDATE_INT)){ $page = 1; }
+            if(isset($_GET['page'])){ $page = $_GET['page']; }
+            else{ $page = 1; }
+            if(!filter_var($page, FILTER_VALIDATE_INT)){ $page = 1; }
 
-                $stmt = $conn->query("SELECT id FROM `blogs`");
-                $numblogs = $stmt->num_rows;
-                $pages = ceil($numblogs/20);
-                $offset = ($page - 1)*20;
+            $stmt = $conn->query("SELECT id FROM `blogs`");
+            $numblogs = $stmt->num_rows;
+            $pages = ceil($numblogs/20);
+            $offset = ($page - 1)*20;
 
-                $stmt = $conn->prepare("SELECT * FROM `blogs` LIMIT 20 OFFSET ?");
-                $stmt->bind_param("i", $offset);
-                $stmt->execute();
-                $result = $stmt->get_result();
+            $stmt = $conn->prepare("SELECT * FROM `blogs` ORDER BY id DESC LIMIT 20 OFFSET ?");
+            $stmt->bind_param("i", $offset);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-                $stmt->close();
+            $stmt->close();
         ?>
         <div class="container">
             <h1>Blogs [wip]</h1>
