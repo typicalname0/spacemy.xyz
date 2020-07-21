@@ -23,8 +23,6 @@
                 if(!$_POST['g-recaptcha-response']){ $error = "captcha validation failed"; goto skip; }
                 if(!validateCaptcha(CAPTCHA_PRIVATEKEY, $_POST['g-recaptcha-response'])) { $error = "captcha validation failed"; goto skip; }
 
-                if(!$responseData->success) { $error = "captcha validation failed"; goto skip; }
-
                 $stmt = $conn->prepare("INSERT INTO `blogs` (text, author, date, title) VALUES (?, ?, now(), ?)");
                 $stmt->bind_param("sss", $text, $_SESSION['user'], $name);
                 $unprocessedText = replaceBBcodes($_POST['desc']);
