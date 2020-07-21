@@ -24,9 +24,9 @@
             <?php
                 $stmt1 = $conn->prepare("SELECT * FROM `blogs`");
                 $stmt1->execute();
-                $pgs = $mysqli_num_rows($stmt->get_result());
+                $pgs = $stmt1->get_result()->num_rows();
                 $pgOffset = 0;
-                if (isset($_GET["pg"])){
+                if (isset($_GET["pg"])) {
                     $pgOffset = -20 + (intval($_GET["pg"])*20);
                 }
                 $stmt = $conn->prepare("SELECT * FROM `blogs` LIMIT 20 OFFSET $pgOffset");
