@@ -57,7 +57,7 @@
                     $author = $row['author'];
                     $authorid = getID($author, $conn);
                     $date = substr($row['date'], 0, -3);
-                    echo "<b>$title</b> - by <a href='/profile.php?id=$authorid'>$author</a> <span style='float:right'>$date | <a href='viewblog.php?id=$id'><small>[view]</small></a></span><hr>";
+                    echo "<b>$title</b> - by <a href='/profile.php?id=$authorid'>$author</a> <span style='float:right'>$date | <a href='view.php?id=$id'><small>[view]</small></a></span><hr>";
                 }
                 if(!mysqli_num_rows($result)){ echo "<b>No blogs found</b>"; }
             ?>
