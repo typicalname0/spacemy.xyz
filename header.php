@@ -45,6 +45,6 @@
         </span></small>
     </div>
 </div>
-<div style="border: 1px solid black;">
-    <center>join the discord - https://discord.gg/jUbyMh9</center>
+<div style="border: 1px solid black;text-align: center;">
+    join the discord - https://discord.gg/jUbyMh9
 </div>
