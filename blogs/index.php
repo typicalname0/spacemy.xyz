@@ -20,6 +20,11 @@
             $pages = ceil($numblogs/20);
             $offset = ($page - 1)*20;
 
+            if($page == 1){ $first_disabled = true; } else { $first_disabled = false; }
+            if($page < 2){ $back_disabled = true; } else { $back_disabled = false; }
+            if($page >= $pages){ $next_disabled = true; } else { $next_disabled = false; }
+            if($page == $pages){ $last_disabled = true; } else { $last_disabled = false; }
+
             $stmt = $conn->prepare("SELECT * FROM `blogs` ORDER BY id DESC LIMIT 20 OFFSET ?");
             $stmt->bind_param("i", $offset);
             $stmt->execute();
@@ -30,9 +35,11 @@
         <div class="container">
             <h1>Blogs [wip]</h1>
             <div style="text-align:center;">
-                <a <?php if($page > 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
-                <?php echo "[ Page $page out of $pages ]"; ?>
-                <a <?php if ($page < $pages) { echo 'href="?page='.($page+1).'"'; } ?>>Next &gt;&gt;</a>
+                <a href="?page=1"><button <?php if($first_disabled){ echo'disabled="disbled"'; }?>>&lt;&lt; First</button></a>
+                <a href="?page=<?php echo $page-1; ?>"><button <?php if($back_disabled){ echo'disabled="disbled"'; }?>>&lt; Back</button></a>
+                <?php echo "[ Page $page of $pages ]"; ?>
+                <a href="?page=<?php echo $page+1; ?>"><button <?php if($next_disabled){ echo'disabled="disbled"'; }?>>Next &gt;</button></a>
+                <a href="?page=<?php echo $pages; ?>"><button <?php if($last_disabled){ echo'disabled="disbled"'; }?>>Last &gt;&gt;</button></a>
             </div>
             <br>
             <form action="/search.php" method="post" class="search">
@@ -56,9 +63,11 @@
             ?>
             <br>
             <div style="text-align:center;">
-                <a <?php if($page > 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
-                <?php echo "[ Page $page out of $pages ]"; ?>
-                <a <?php if ($page < $pages) { echo 'href="?page='.($page+1).'"'; } ?>>Next &gt;&gt;</a>
+                <a href="?page=1"><button <?php if($first_disabled){ echo'disabled="disbled"'; }?>>&lt;&lt; First</button></a>
+                <a href="?page=<?php echo $page-1; ?>"><button <?php if($back_disabled){ echo'disabled="disbled"'; }?>>&lt; Back</button></a>
+                <?php echo "[ Page $page of $pages ]"; ?>
+                <a href="?page=<?php echo $page+1; ?>"><button <?php if($next_disabled){ echo'disabled="disbled"'; }?>>Next &gt;</button></a>
+                <a href="?page=<?php echo $pages; ?>"><button <?php if($last_disabled){ echo'disabled="disbled"'; }?>>Last &gt;&gt;</button></a>
             </div>
         </div>
     </body>
