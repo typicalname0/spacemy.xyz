@@ -1,7 +1,7 @@
 <div class="header">
     <div class="headerTop">
         <a href="/"><b>spacemy.xyz</b></a>
-        <form action="/search.php" method="post" class="search">
+        <form action="/search.php" method="get" class="search">
             <input placeholder="Search" type="text" name="query">
             <select name="queryfor">
                 <option value="Users">Users</option>
@@ -20,7 +20,7 @@
                     echo '<a href="register.php">Register</a> &bull; <a href="login.php">Login</a> &bull; ';
                 }
             ?>
-            <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a>
+            <a href="/groups/">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a>
         </small>
         <small><span style="float:right">
             <?php

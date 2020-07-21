@@ -1,6 +1,6 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("/func/conn.php");
+    require("/func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@
                 $groupname = htmlspecialchars($_POST['groupname']);
                 $stmt->execute();
                 $stmt->close();  
-                header("Location: groups.php");             
+                header("Location: index.php");             
             }
             skip:
         ?>
