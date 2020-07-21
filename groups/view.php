@@ -23,7 +23,7 @@
                 $desc = $row['description'];
                 $author = $row['author'];
                 $date = $row['date'];
-                $shout = "s";
+                $shout = $row['shout'];
             }
 
             if(@$_POST["comment"]) {
