@@ -56,7 +56,7 @@
             <h1><?php echo $name; ?></h1>
             <div class='commentRight' style='display: grid; grid-template-columns: 25% auto; padding:5px;'>
                 <div>
-                    <a style='float: left;' href='profile.php?id=<?php echo getID($author, $conn); ?>'><?php echo $author; ?></a>
+                    <a style='float: left;' href='/profile.php?id=<?php echo getID($author, $conn); ?>'><?php echo $author; ?></a>
                     <br>
                     <img class='commentPictures' style='float: left; height:160px; width:160px' src='/pfp/<?php echo getPFP($author, $conn); ?>'>
                 </div>
@@ -77,9 +77,9 @@
                 <?php while($row = $result->fetch_assoc()) { ?>
                 <div class='commentRight' style='display: grid; grid-template-columns: auto 85%; padding:5px;'>
                     <div>
-                        <a style='float: left;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
+                        <a style='float: left;' href='/profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
                         <br>
-                        <img class='commentPictures' style='float: left;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
+                        <img class='commentPictures' style='float: left;' height='80px;'width='80px;'src='/pfp/<?php echo getPFP($row['author'], $conn); ?>'>
                     </div>
                     <div style="word-wrap: break-word;">
                         <small><?php echo $row['date']; ?></small>
