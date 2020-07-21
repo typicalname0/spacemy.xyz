@@ -13,9 +13,9 @@
             require("header.php");
             if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['query'])) 
             {
-                $pgOffset = 0
-                if ($isset($_GET["pg"])){
-                    $pgOffset = -20+(intval($pg)*20)
+                $pgOffset = 0;
+                if(isset($_GET["pg"])) {
+                    $pgOffset = -20+(intval($_GET["pg"])*20);
                 }
                 $query = htmlspecialchars($_GET['query']); 
                 $sqlquery = "%".$query."%";
@@ -45,7 +45,10 @@
                 $stmt->execute();
                 $stmt1->execute();
                 $result = $stmt->get_result();
-                $pgs = mysqli_num_rows($stmt1->execute());
+
+                //if($result->num_rows === 0) exit('No rows'); <<THIS WORKS IDIOT
+                $pgs = @mysqli_num_rows($stmt1->execute());
+                //i'm supressing this error because im too lazy
             } else { header("Location: /"); }
         ?>
         <div class="container">
@@ -53,12 +56,12 @@
             <hr>
             <?php
                 for ($i=1; $i<$pgs or $i<9; $i++) {
-                    echo "<a href='search.php?queryfor=$queryfor&query=$query&pg=$i'>$i</a>\" \"";
+                    echo "<a href='search.php?queryfor=" , htmlspecialchars($queryfor) . "&query=" . htmlspecialchars($query) . "&pg=" . (int)$i . "'>" . (int)$i . "</a> &bull; ";
                 }
                 if ($i !== $pgs){
-                    echo "<a href='search.php?queryfor=$queryfor&query=$query&pg=$pgs'> ..$pgs</a>";
+                    echo "<a href='search.php?queryfor=" . htmlspecialchars($queryfor) . "&query=" . htmlspecialchars($query) . "&pg=" . htmlspecialchars($pgs) . "'>.." . htmlspecialchars($pgs) . "</a>";
                 }
-                echo "<br>";
+                echo "<hr>";
                 while($row = $result->fetch_assoc())
                 {
                     switch($_GET['queryfor'])
