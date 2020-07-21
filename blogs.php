@@ -45,7 +45,12 @@
             <?php
                 while($row = $result->fetch_assoc()) 
                 {
-                    echo "<b>" . $row['title'] . "</b> - " . $row['author'] . "@" . $row['date'] . " <a style='float: right;' href='viewblog.php?id=" . $row['id'] . "'><small>[view]</small></a><hr>";
+                    $title = $row['title'];
+                    $id = $row['id'];
+                    $author = $row['author'];
+                    $authorid = getID($author, $conn);
+                    $date = substr($row['date'], 0, -3);
+                    echo "<b>$title</b> - by <a href='/profile.php?id=$authorid'>$author</a> <span style='float:right'>$date | <a href='viewblog.php?id=$id'><small>[view]</small></a></span><hr>";
                 }
                 if(!mysqli_num_rows($result)){ echo "<b>No blogs found</b>"; }
             ?>
