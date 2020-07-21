@@ -1,6 +1,6 @@
 <?php
-    require("/func/conn.php");
-    require("/func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,7 +46,7 @@
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
         ?>
         <div class="container">
             <h1><?php echo $name;?></h1>

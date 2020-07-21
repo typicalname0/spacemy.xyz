@@ -1,6 +1,6 @@
 <?php
-require("/func/conn.php");
-require("/func/settings.php");
+require("../func/conn.php");
+require("../func/settings.php");
 requireLogin();
 
 $stmt = $conn->prepare("UPDATE users SET currentgroup = 0 WHERE username = ?");
