@@ -14,7 +14,7 @@
         ?>
         <div class="container">
             <h1>Blogs [wip]</h1>
-            <form action="/search.php" method="post" class="search">
+            <form action="/search.php" method="get" class="search">
                 <input placeholder="Search for blogs..." size="59" type="text" name="query">
                 <input type="hidden" name="queryfor" value="Blogs">
                 <input type="submit" value="Search">
