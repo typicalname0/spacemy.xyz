@@ -60,6 +60,7 @@
             }
             skipcomment:
         ?>
+        <title><?php echo $user;?> - spacemy.xyz</title>
         <meta property="og:site_name" content="spacemy.xyz"/>
         <meta property="og:title" content="<?php echo $user; ?>"/>
         <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>New group - spacemy.xyz</title>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>

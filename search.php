@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Search results for <?php echo $_GET['query'];?> - spacemy.xyz</title>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
     </head>

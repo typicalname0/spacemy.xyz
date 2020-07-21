@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Settings - spacemy.xyz</title>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
     </head>

@@ -47,6 +47,7 @@
             }
             skipcomment:
         ?>
+        <title><?php echo $name;?> - spacemy.xyz</title>
     </head>
     <body>
         <?php

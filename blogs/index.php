@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Blogs - spacemy.xyz</title>
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/base.css">
     </head>
