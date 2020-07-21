@@ -14,7 +14,7 @@
         ?>
         <div class="container">
             <h1>Blogs [wip]</h1>
-            <form action="/search.php" method="post" class="search">
+            <form action="/search.php" method="get" class="search">
                 <input placeholder="Search for blogs..." size="59" type="text" name="query">
                 <input type="hidden" name="queryfor" value="Blogs">
                 <input type="submit" value="Search">
@@ -22,10 +22,23 @@
             </form>
             <hr>
             <?php
-                $stmt = $conn->prepare("SELECT * FROM `blogs`");
+                $stmt1 = $conn->prepare("SELECT * FROM `blogs`");
+                $stmt1->execute();
+                $pgs = $mysqli_num_rows($stmt->get_result());
+                $pgOffset = 0;
+                if (isset($_GET["pg"])){
+                    $pgOffset = -20 + (intval($_GET["pg"])*20);
+                }
+                $stmt = $conn->prepare("SELECT * FROM `blogs` LIMIT 20 OFFSET $pgOffset");
                 $stmt->execute();
                 $result = $stmt->get_result();
-                
+                for ($i=1; $i<$pgs or $i<9; $i++) {
+                    echo "<a href='blogs.php?pg=$i'>$i</a>\" \"";
+                }
+                if ($i !== $pgs){
+                    echo "<a href='blogs.php?pg=$pgs'> ..$pgs</a>";
+                }
+                echo "<br>";
                 while($row = $result->fetch_assoc()) {
                     echo "<b>" . $row['title'] . "</b> - " . $row['author'] . "@" . $row['date'] . " <a style='float: right;' href='viewblog.php?id=" . $row['id'] . "'><small>[view]</small></a><hr>";
                 }
