@@ -1,6 +1,6 @@
 <?php
-    require("/func/conn.php");
-    require("/func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
             if($_SERVER['REQUEST_METHOD'] == 'POST') 
             {
                 if(!$_POST['groupname']){ $error = "you must specify a group title"; goto skip; }

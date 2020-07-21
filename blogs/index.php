@@ -1,16 +1,16 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/base.css">
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
             if(isset($_GET['page'])){ $page = $_GET['page']; }
             else{ $page = 1; }
             if(!filter_var($page, FILTER_VALIDATE_INT)){ $page = 1; }
@@ -39,7 +39,7 @@
                 <input placeholder="Search for blogs..." size="59" type="text" name="query">
                 <input type="hidden" name="queryfor" value="Blogs">
                 <input type="submit" value="Search">
-                <span><a href="newblog.php">make a new blog</a></span>
+                <span><a href="/blogs/new.php">make a new blog</a></span>
             </form>
             <hr>
             <?php

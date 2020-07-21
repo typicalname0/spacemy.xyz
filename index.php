@@ -65,10 +65,10 @@
                     $result = $conn->query("SELECT id, title, author FROM `blogs` ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
-                        echo "<a href='/groups/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
+                        echo "<a href='/blogs/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
                     }
                 ?>
-                <a href="/blogs.php">[ View more blog posts ]</a>
+                <a href="/blogs/">[ View more blog posts ]</a>
                 <br>
                 <br>
                 <hr>
@@ -129,7 +129,7 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while($row = $result->fetch_assoc()) { ?>
-                        <a href='/viewblog.php?id=<?php echo $row['id']; ?>'><?php echo $row['title']; ?></a>
+                        <a href='/blogs/view.php?id=<?php echo $row['id']; ?>'><?php echo $row['title']; ?></a>
                         <br>
                     <?php } ?>
                     </div>

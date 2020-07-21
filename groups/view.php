@@ -1,12 +1,12 @@
 <?php
-    require("/func/conn.php");
-    require("/func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/base.css">
         <style type="text/css">
             #left {float: left;width:59%;}
             #right {float: right;width:39%;}
@@ -23,7 +23,7 @@
                 $desc = $row['description'];
                 $author = $row['author'];
                 $date = $row['date'];
-                $shout = $row['shout'];
+                $shout = "s";
             }
 
             if(@$_POST["comment"]) {
@@ -46,7 +46,7 @@
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
         ?>
         <div class="container">
             <h1><?php echo $name;?></h1>

@@ -1,12 +1,12 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/base.css">
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <?php
@@ -50,7 +50,7 @@
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
         ?>
         <div class="container">
             <h1><?php echo $name; ?></h1>
@@ -58,7 +58,7 @@
                 <div>
                     <a style='float: left;' href='profile.php?id=<?php echo getID($author, $conn); ?>'><?php echo $author; ?></a>
                     <br>
-                    <img class='commentPictures' style='float: left; height:160px; width:160px' src='pfp/<?php echo getPFP($author, $conn); ?>'>
+                    <img class='commentPictures' style='float: left; height:160px; width:160px' src='/pfp/<?php echo getPFP($author, $conn); ?>'>
                 </div>
                 <div style="word-wrap: break-word; padding-left:20px;">
                     <small><?php echo $date; ?> | <a href="#comment"><button>Comment</button></a></small>

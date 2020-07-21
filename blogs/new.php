@@ -1,19 +1,19 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("../func/conn.php");
+    require("../func/settings.php");
     requireLogin();
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/base.css">
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
     </head>
     <body>
         <?php
-            require("header.php");
+            require("../header.php");
             if($_SERVER['REQUEST_METHOD'] == 'POST') 
             {
                 if(!$_POST['groupname']){ $error = "you must specify a blog title"; goto skip; }
@@ -30,7 +30,7 @@
                 $name = htmlspecialchars($_POST['groupname']);
                 $stmt->execute();
                 $stmt->close();         
-                header("Location: /blogs.php");              
+                header("Location: /blogs/");              
             }
             skip:
         ?>
