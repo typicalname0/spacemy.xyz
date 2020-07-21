@@ -7,6 +7,8 @@
     <head>
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/base.css">
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <?php
             if(!isset($_SESSION['user'])){ header("Location: /landing.php"); die(); }
             $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
@@ -63,10 +65,10 @@
                     $result = $conn->query("SELECT id, title, author FROM `blogs` ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
-                        echo "<a href='/groups/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
+                        echo "<a href='/blogs/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
                     }
                 ?>
-                <a href="/blogs.php">[ View more blog posts ]</a>
+                <a href="/blogs/">[ View more blog posts ]</a>
                 <br>
                 <br>
                 <hr>
@@ -127,7 +129,7 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while($row = $result->fetch_assoc()) { ?>
-                        <a href='/viewblog.php?id=<?php echo $row['id']; ?>'><?php echo $row['title']; ?></a>
+                        <a href='/blogs/view.php?id=<?php echo $row['id']; ?>'><?php echo $row['title']; ?></a>
                         <br>
                     <?php } ?>
                     </div>
@@ -167,9 +169,9 @@
                     <br>
                     <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
-                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data" id="submitform">
                             <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
-                            <input name="commentsubmit" type="submit" value="Post"> <small>max limit: 500 characters | bbcode supported</small>
+                            <input type="submit" value="Post" class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="onLogin"> <small>max limit: 500 characters | bbcode supported</small>
                         </form>
                         <hr>
                         <div class="commentsList">

@@ -1,6 +1,6 @@
 <?php
-require("func/conn.php");
-require("func/settings.php");
+require("../func/conn.php");
+require("../func/settings.php");
 requireLogin();
 
 if(isset($_GET['id'])) {
@@ -8,10 +8,8 @@ if(isset($_GET['id'])) {
     $stmt->bind_param("i", $_GET['id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    while($row = $result->fetch_assoc()) {
-        $author = $row['author'];
-    }
+
+    $author = $row['author'];
 
     if ($author === $_SESSION['user']) {
         $stmt = $conn->prepare("DELETE FROM `blogs` WHERE id = ?");
@@ -19,6 +17,6 @@ if(isset($_GET['id'])) {
         $stmt->execute();
         $stmt->close();
     }
-    header("Location: index.php");
+    header("Location: /blogs/");
 }
 ?>

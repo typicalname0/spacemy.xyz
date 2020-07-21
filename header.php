@@ -15,12 +15,12 @@
         <small>
             <?php
                 if(isset($_SESSION['user'])) {
-                    echo '<a href="index.php">Your Account</a> &bull; ';
+                    echo '<a href="/">Your Account</a> &bull; ';
                 } else {
-                    echo '<a href="register.php">Register</a> &bull; <a href="login.php">Login</a> &bull; ';
+                    echo '<a href="/register.php">Register</a> &bull; <a href="/login.php">Login</a> &bull; ';
                 }
             ?>
-            <a href="/groups/">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a>
+            <a href="/groups">Groups</a> &bull; <a href="/blogs">Blogs</a> &bull; <a href="/jukebox.php">Jukebox</a> &bull; <a href="/videos">Videos</a>
         </small>
         <small><span style="float:right">
             <?php

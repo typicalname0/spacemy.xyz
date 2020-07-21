@@ -11,57 +11,37 @@
     <body>
         <?php
             require("header.php");
-            if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['query'])) 
+            if(isset($_GET['query'])) 
             {
-                $pgOffset = 0;
-                if(isset($_GET["pg"])) {
-                    $pgOffset = -20+(intval($_GET["pg"])*20);
-                }
                 $query = htmlspecialchars($_GET['query']); 
                 $sqlquery = "%".$query."%";
                 switch($_GET['queryfor'])
                 {
                     case "Groups":
-                        $stmt1 = $conn->prepare("SELECT id, name, description, author, date, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE name LIKE ?");
-                        $stmt = $conn->prepare("SELECT id, name, description, author, date, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE name LIKE ? LIMIT 20 OFFSET $pgOffset");
+                        $stmt = $conn->prepare("SELECT id, name, description, author, date, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE name LIKE ?");
                         $queryfor = "Group";
                         break;
                     
                     case "Blogs":
-                        $stmt1 = $conn->prepare("SELECT id, title, date, author FROM `blogs` WHERE title LIKE ?");
-                        $stmt = $conn->prepare("SELECT id, title, date, author FROM `blogs` WHERE title LIKE ? LIMIT 20 OFFSET $pgOffset");
+                        $stmt = $conn->prepare("SELECT id, title, date, author FROM `blogs` WHERE title LIKE ?");
                         $queryfor = "Blog";
                         break;
 
                     default:
-                        $stmt1 = $conn->prepare("SELECT id, username FROM `users` WHERE username LIKE ?");
-                        $stmt = $conn->prepare("SELECT id, username FROM `users` WHERE username LIKE ? LIMIT 20 OFFSET $pgOffset");
+                        $stmt = $conn->prepare("SELECT id, username FROM `users` WHERE username LIKE ?");
                         $queryfor = "User";
                         break;
                 }
 
                 $stmt->bind_param("s", $sqlquery);
-                $stmt1->bind_param("s", $sqlquery);
                 $stmt->execute();
-                $stmt1->execute();
                 $result = $stmt->get_result();
-
-                //if($result->num_rows === 0) exit('No rows'); <<THIS WORKS IDIOT
-                $pgs = @mysqli_num_rows($stmt1->execute());
-                //i'm supressing this error because im too lazy
             } else { header("Location: /"); }
         ?>
         <div class="container">
             <h1><?php echo $queryfor ?> results for <u><?php echo $query; ?></u> (<?php echo $result->num_rows; ?>)</h1>
             <hr>
-            <?php
-                for ($i=1; $i<$pgs or $i<9; $i++) {
-                    echo "<a href='search.php?queryfor=" , htmlspecialchars($queryfor) . "&query=" . htmlspecialchars($query) . "&pg=" . (int)$i . "'>" . (int)$i . "</a> &bull; ";
-                }
-                if ($i !== $pgs){
-                    echo "<a href='search.php?queryfor=" . htmlspecialchars($queryfor) . "&query=" . htmlspecialchars($query) . "&pg=" . htmlspecialchars($pgs) . "'>.." . htmlspecialchars($pgs) . "</a>";
-                }
-                echo "<hr>";
+            <?php 
                 while($row = $result->fetch_assoc())
                 {
                     switch($_GET['queryfor'])

@@ -34,15 +34,15 @@
                     $result = $conn->query("SELECT id, title, author FROM blogs ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
-                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
+                        echo "<a href='/blogs/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
                     }
                 ?>
                 <hr>
-                <a href="/blogs.php">View more blog posts</a>
+                <a href="/blogs/">View more blog posts</a>
                 <br>
                 <br>
                 <div class="topBarWithItemsThing">
-                    <a href="blogs">Blogs</a> &nbsp;<a href="/groups/">Groups</a> &nbsp;<a href="/register.php">Register</a> &nbsp;<a href="/login.php">Login</a>
+                    <a href="/blogs/">Blogs</a> &nbsp;<a href="/groups/">Groups</a> &nbsp;<a href="/register.php">Register</a> &nbsp;<a href="/login.php">Login</a>
                 </div>
                 <br>
                 THIS IS UNDER CONSTRUCTION!!
