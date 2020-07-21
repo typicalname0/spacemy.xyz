@@ -30,7 +30,7 @@
         <div class="container">
             <h1>Blogs [wip]</h1>
             <div style="text-align:center;">
-                <a <?php if($page != 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
+                <a <?php if($page > 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
                 <?php echo "[ Page $page out of $pages ]"; ?>
                 <a <?php if ($page < $pages) { echo 'href="?page='.($page+1).'"'; } ?>>Next &gt;&gt;</a>
             </div>
@@ -51,7 +51,7 @@
             ?>
             <br>
             <div style="text-align:center;">
-                <a <?php if($page != 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
+                <a <?php if($page > 1){ echo 'href="?page='.($page-1).'"'; } ?>>&lt;&lt; Back</a>
                 <?php echo "[ Page $page out of $pages ]"; ?>
                 <a <?php if ($page < $pages) { echo 'href="?page='.($page+1).'"'; } ?>>Next &gt;&gt;</a>
             </div>
