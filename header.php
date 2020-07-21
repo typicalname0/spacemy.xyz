@@ -20,7 +20,7 @@
                     echo '<a href="register.php">Register</a> &bull; <a href="login.php">Login</a> &bull; ';
                 }
             ?>
-            <a href="groups.php">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a>
+            <a href="/groups/">Groups</a> &bull; <a href="blogs.php">Blogs</a> &bull; <a href="jukebox.php">Jukebox</a> &bull; <a href="videos">Videos</a>
         </small>
         <small><span style="float:right">
             <?php

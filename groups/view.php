@@ -1,6 +1,6 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("/func/conn.php");
+    require("/func/settings.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,9 +90,9 @@
                         $result = $stmt->get_result();
                         while ($row = $result->fetch_assoc()) {
                             if($row['currentgroup'] == $_GET['id']) {
-                                echo "<a href='leavegroup.php'><button>Leave Group</button></a>";
+                                echo "<a href='leave.php'><button>Leave Group</button></a>";
                             } else {
-                                echo "<a href='joingroup.php?id=" . $_GET['id'] . "'><button>Join Group</button></a>";
+                                echo "<a href='join.php?id=" . $_GET['id'] . "'><button>Join Group</button></a>";
                             }
                             if($author === $_SESSION['user']) {?>
                                 <br/><br/>

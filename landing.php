@@ -42,7 +42,7 @@
                 <br>
                 <br>
                 <div class="topBarWithItemsThing">
-                    <a href="blogs">Blogs</a> &nbsp;<a href="/groups.php">Groups</a> &nbsp;<a href="/register.php">Register</a> &nbsp;<a href="/login.php">Login</a>
+                    <a href="blogs">Blogs</a> &nbsp;<a href="/groups/">Groups</a> &nbsp;<a href="/register.php">Register</a> &nbsp;<a href="/login.php">Login</a>
                 </div>
                 <br>
                 THIS IS UNDER CONSTRUCTION!!

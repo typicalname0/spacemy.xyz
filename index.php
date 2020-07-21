@@ -63,7 +63,7 @@
                     $result = $conn->query("SELECT id, title, author FROM `blogs` ORDER BY id DESC LIMIT 5");
                     while($row = $result->fetch_assoc()) 
                     {
-                        echo "<a href='/viewblog.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
+                        echo "<a href='/groups/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
                     }
                 ?>
                 <a href="/blogs.php">[ View more blog posts ]</a>
@@ -83,10 +83,10 @@
                     {
                         $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)']; //cant really do this any other way lol
                         if(!$memberCount){ $memberCount = "No"; }
-                        echo "<a href='/viewgroup.php?id=".$row['id']."'>".$row['name']."</a> - ".$memberCount." member(s)<br><br>";
+                        echo "<a href='/groups/view.php?id=".$row['id']."'>".$row['name']."</a> - ".$memberCount." member(s)<br><br>";
                     }
                 ?>
-                <a href="/groups.php">[ View more groups ]</a>
+                <a href="/groups/">[ View more groups ]</a>
                 <br>
                 <br>
             </div>
@@ -107,7 +107,7 @@
                     <br>
                     <div class="contactInfo" id="group">
                         <div style="text-align:center;">
-                            Current Group: <b><a href="/viewgroup.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
+                            Current Group: <b><a href="/groups/view.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
                         </div>

@@ -1,6 +1,6 @@
 <?php
-require("func/conn.php");
-require("func/settings.php");
+require("/func/conn.php");
+require("/func/settings.php");
 requireLogin();
 
 if((int)$_GET['id']) {
@@ -17,6 +17,6 @@ if((int)$_GET['id']) {
         $stmt->execute();
         $stmt->close();
     }
-    header("Location: groups.php");
+    header("Location: index.php");
 }
 ?>
