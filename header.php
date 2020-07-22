@@ -20,7 +20,7 @@
                     echo '<a href="/register.php">Register</a> &bull; <a href="/login.php">Login</a> &bull; ';
                 }
             ?>
-            <a href="/groups">Groups</a> &bull; <a href="/blogs">Blogs</a> &bull; <a href="/jukebox.php">Jukebox</a> &bull; <a href="/videos">Videos</a>
+            <a href="/groups">Groups</a> &bull; <a href="/blogs">Blogs</a> &bull; <a href="/jukebox.php">Jukebox</a> &bull; <a href="/videos">Videos</a> &bull; <a href="random.php">Random</a> &bull; <a href="users.php">Users</a>
         </small>
         <small><span style="float:right">
             <?php
@@ -46,5 +46,5 @@
     </div>
 </div>
 <div style="border: 1px solid black;text-align: center;">
-    join the discord - https://discord.gg/jUbyMh9
+    join the discord - https://discord.gg/T9khjPX
 </div>
