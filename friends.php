@@ -29,7 +29,7 @@
 
                     $id = 0;
                     while($row = $result->fetch_assoc()) {
-                        echo "<div class='friendsGridItem'><a href='profile.php?id=" . getID($row['sender'], $conn) . "'><center><b>" . $row['sender'] . "</b></center><br><img width='125px'src='pfp/" . getPFP($row['sender'], $conn) . "'></a><br>
+                        echo "<div class='friendsGridItem'><a href='profile.php?id=" . getID($row['sender'], $conn) . "'><center><b>" . $row['sender'] . "</b></center><br><img width='125px' height='125px' src='pfp/" . getPFP($row['sender'], $conn) . "'></a><br>
                         <a href='accept.php?id=" . $row['id'] . "'><button>Accept</button></a> <a href='revoke.php?id=" . $row['id'] . "'><button>Revoke</button></a></div>";
                         $id++;
                     }
