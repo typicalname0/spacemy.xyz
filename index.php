@@ -19,7 +19,8 @@
             if(!mysqli_num_rows($result)){ die("An unexpected error occured involving your account. <a href='/logout.php'>Logout</a>"); }
             $row = $result->fetch_assoc();
             
-            $badges = preg_split(',', $row['ranks']);
+            $badges = explode(',', $row['ranks']);
+				if (!$badges) {$badges = [];}
             $id = $row['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
