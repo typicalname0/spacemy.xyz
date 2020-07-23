@@ -17,7 +17,7 @@
             if(!mysqli_num_rows($result)){ header("Location: /"); die(); }
             $row = $result->fetch_assoc(); //you dont need to do a while loop because you're only fetching one result
             
-            $badges = strpos($row['ranks'], "dev");
+            $badges = preg_split(',', $row['ranks']);
             $id = $_GET['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
@@ -37,10 +37,9 @@
             } else {$groupname = "None";}
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
 
-            if($badges !== false) {
-                $badge = "<img src='badges/dev.png'>";
-            } else {
-                $badge = "";
+				$badge = "";
+            if(in_array("dev", $badges)) {
+                $badge .= "<img src='badges/dev.png'>";
             }
 
             if($_SERVER['REQUEST_METHOD'] == 'POST') 

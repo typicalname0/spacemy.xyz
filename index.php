@@ -19,7 +19,7 @@
             if(!mysqli_num_rows($result)){ die("An unexpected error occured involving your account. <a href='/logout.php'>Logout</a>"); }
             $row = $result->fetch_assoc();
             
-            $badges = strpos($row['ranks'], "dev");
+            $badges = preg_split(',', $row['ranks']);
             $id = $row['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
@@ -42,11 +42,9 @@
                 $groupname = $row['name'];
             } else {$groupname = "None";}
             
-
-            if($badges !== false) {
-                $badge = "<img src='badges/dev.png'>";
-            } else {
-                $badge = "";
+				$badge = "";
+            if(in_array("dev", $badges)) {
+                $badge .= "<img src='badges/dev.png'>";
             }
         ?>
         <style><?php echo $css; ?></style>
