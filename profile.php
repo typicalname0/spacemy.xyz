@@ -17,7 +17,8 @@
             if(!mysqli_num_rows($result)){ header("Location: /"); die(); }
             $row = $result->fetch_assoc(); //you dont need to do a while loop because you're only fetching one result
             
-            $badges = preg_split(',', $row['ranks']);
+            $badges = explode(',', $row['ranks']);
+				if (!$badges) {$badges = [];}
             $id = $_GET['id'];
             $bio = $row['bio'];
             $interests = $row['interests'];
