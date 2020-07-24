@@ -46,7 +46,8 @@
                     <a href="/blogs/">Blogs</a> &nbsp;<a href="/groups/">Groups</a> &nbsp;<a href="/register.php">Register</a> &nbsp;<a href="/login.php">Login</a>
                 </div>
                 <br>
-                THIS IS UNDER CONSTRUCTION!!
+                THIS IS UNDER CONSTRUCTION!!<br/><br/>
+                <iframe src="https://canary.discordapp.com/widget?id=730672103644332032&theme=dark" style="width: calc(100%)" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
             <div class="right">
                 <div class="info">
