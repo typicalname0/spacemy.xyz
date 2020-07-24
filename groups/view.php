@@ -91,7 +91,7 @@
                             if($row['currentgroup'] == $_GET['id']) {
                                 echo "<a href='leave.php'><button>Leave Group</button></a>";
                             } else {
-                                echo "<a href='join.php?id=<?php echo $_GET['id']; ?>'><button>Join Group</button></a>";
+                                echo "<a href='join.php?id=" . $_GET['id'] . "'><button>Join Group</button></a>";
                             }
                             if($author === $_SESSION['user']) {?>
                                 <br/><br/>
@@ -107,7 +107,7 @@
                     }
                 ?>
                 <?php
-                    echo "Owner: <a href='profile.php?id=<?php echo getID($author, $conn); ?>'><?php echo $author; ?></a><br/><br/>";
+                    echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
                     echo "Members:<br/>";
                     $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
                     $stmt->bind_param("s", $_GET['id']);
@@ -115,7 +115,7 @@
                     $result = $stmt->get_result();
 
                     while($row = $result->fetch_assoc()) {
-                        echo "<a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br/>";
+                        echo "<a href='profile.php?id=" . $row['id'] . "'>" . $row['username'] . "</a><br/>";
                     }
                 ?>
             </div>
