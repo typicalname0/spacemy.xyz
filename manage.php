@@ -28,7 +28,8 @@
                 $stmt = $conn->prepare("UPDATE users SET interests = ? WHERE `users`.`username` = ?;");
                 $stmt->bind_param("ss", $text, $_SESSION['user']);
                 $unprocessedText = replaceBBcodes($_POST['interests']);
-                $text = str_replace(PHP_EOL, "<br>", $unprocessedText);
+//                $text = str_replace(PHP_EOL, "<br>", $unprocessedText);
+                $text = $_POST['interests'];
                 $stmt->execute(); 
                 $stmt->close();
                 header("Location: manage.php");
@@ -36,7 +37,8 @@
                 $stmt = $conn->prepare("UPDATE users SET bio = ? WHERE `users`.`username` = ?;");
                 $stmt->bind_param("ss", $text, $_SESSION['user']);
                 $unprocessedText = replaceBBcodes($_POST['bio']);
-                $text = str_replace(PHP_EOL, "<br>", $unprocessedText);
+//                $text = str_replace(PHP_EOL, "<br>", $unprocessedText);
+                $text = $_POST['bio'];
                 $stmt->execute(); 
                 $stmt->close();
                 header("Location: manage.php");

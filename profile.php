@@ -20,8 +20,8 @@
             $badges = explode(',', $row['ranks']);
 				if (!$badges) {$badges = [];}
             $id = $_GET['id'];
-            $bio = $row['bio'];
-            $interests = $row['interests'];
+            $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
+            $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
             $user = $row['username'];
             $css = $row['css'];
             $status = $row['status'];
