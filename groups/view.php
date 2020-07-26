@@ -107,7 +107,7 @@
                     }
                 ?>
                 <?php
-                    echo "Owner: <a href='profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
+                    echo "Owner: <a href='/profile.php?id=" . getID($author, $conn) . "'>" . $author . "</a><br/><br/>";
                     echo "Members:<br/>";
                     $stmt = $conn->prepare("SELECT * FROM `users` WHERE currentgroup = ?");
                     $stmt->bind_param("s", $_GET['id']);
