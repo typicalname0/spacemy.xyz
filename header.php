@@ -1,6 +1,15 @@
+<?php
+if(isset($_SESSION['user'])) {
+    $stmt = $conn->prepare("UPDATE users SET lastactive = NOW() WHERE username = ?");
+    $stmt->bind_param("s", $_SESSION['user']);
+    $stmt->execute();
+    $stmt->close();
+}
+?>
+
 <div class="header">
     <div class="headerTop">
-        <a href="/"><b>spacemy.xyz</b></a>
+        <a href="/"><b><?php echo SITE_TITLE; ?></b></a>
         <form action="/search.php" method="get" class="search">
             <input placeholder="Search" type="text" name="query">
             <select name="queryfor">
@@ -20,7 +29,7 @@
                     echo '<a href="/register.php">Register</a> &bull; <a href="/login.php">Login</a> &bull; ';
                 }
             ?>
-            <a href="/groups">Groups</a> &bull; <a href="/blogs">Blogs</a> &bull; <a href="/jukebox.php">Jukebox</a> &bull; <a href="/videos">Videos</a> &bull; <a href="random.php">Random</a> &bull; <a href="users.php">Users</a>
+            <a href="/groups">Groups</a> &bull; <a href="/blogs">Blogs</a> &bull; <a href="/jukebox.php">Jukebox</a> &bull; <a href="random.php">Random</a> &bull; <a href="users.php">Users</a> <?php if(VIDEOS_MODULE == true) { echo "&bull; <a href='/videos'>Videos</a>"; }?>
         </small>
         <small><span style="float:right">
             <?php
@@ -46,5 +55,5 @@
     </div>
 </div>
 <div style="border: 1px solid black;text-align: center;">
-    join the discord - https://discord.gg/T9khjPX
+    dm me if you want to join the discord - tydentlor#1390
 </div>

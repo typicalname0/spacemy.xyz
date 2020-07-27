@@ -7,12 +7,18 @@
         $username = htmlspecialchars(@$_POST['username']);
         $password = @$_POST['password'];
         $passwordhash = password_hash(@$password, PASSWORD_DEFAULT);
+        
+        if(DISABLE_PASSWORD_REQUIREMENTS != true) {
+            if($_POST['password'] !== $_POST['confirm']){ $error = "password and confirmation password do not match"; goto skip; }
 
-        if($_POST['password'] !== $_POST['confirm']){ $error = "password and confirmation password do not match"; goto skip; }
-
-        if(strlen($username) > 21) { $error = "your username must be shorter than 21 characters"; goto skip; }
-        if(strlen($password) < 8) { $error = "your password must be at least 8 characters long"; goto skip; }
-        if(!preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $password)) { $error = "please include both letters and numbers in your password"; goto skip; }
+            if(strlen($username) > 21) { $error = "your username must be shorter than 21 characters"; goto skip; }
+            if(strlen($password) < 8) { $error = "your password must be at least 8 characters long"; goto skip; }
+            if(!preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $password)) { $error = "please include both letters and numbers in your password"; goto skip; }
+            
+            if(INVITE_ONLY == true) {
+                if($_POST['key'] != INVITE_KEY) { $error = "invalid key"; goto skip; }
+            }
+        }
 
         $stmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
@@ -54,6 +60,7 @@
                 <?php if(isset($error)) { echo "<small style='color:red'>".$error."</small>"; } ?>
                 <form method="post">
                     <input required placeholder="Username" type="text" name="username"><br>
+                    <input required placeholder="Key" type="text" name="key"><br>
                     <input required placeholder="E-Mail" type="email" name="email">
                     <hr>
                     <input required placeholder="Password" type="password" name="password"><br>
