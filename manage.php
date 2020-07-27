@@ -146,25 +146,25 @@ requireLogin();
         <br>
         <b>Bio</b>
         <form method="post" enctype="multipart/form-data">
-            <textarea required cols="58" placeholder="Bio" name="bio"><?php echo $bio; ?></textarea><br>
+            <textarea required cols="58" placeholder="Bio" name="bio" maxlength="500"><?php echo $bio; ?></textarea><br>
             <input name="bioset" type="submit" value="Set"> <small>max limit: 500 characters | supports bbcode</small>
         </form>
         <br>
         <b>Interests</b>
         <form method="post" enctype="multipart/form-data">
-            <textarea required cols="58" placeholder="Interests" name="interests"><?php echo $interests; ?></textarea><br>
+            <textarea required cols="58" placeholder="Interests" name="interests" maxlength="500"><?php echo $interests; ?></textarea><br>
             <input name="interestset" type="submit" value="Set"> <small>max limit: 500 characters | supports bbcode</small>
         </form>
         <br>
         <b>CSS</b>
         <form method="post" enctype="multipart/form-data">
-            <textarea required rows="15" cols="58" placeholder="Your CSS" name="css"><?php echo $css; ?></textarea><br>
+            <textarea required rows="15" cols="58" placeholder="Your CSS" name="css" maxlength="5000"><?php echo $css; ?></textarea><br>
             <input name="cssset" type="submit" value="Set"> <small>max limit: 5000 characters</small>
         </form>
         <br>
         <b>Status</b>
         <form method="post" enctype="multipart/form-data">
-            <input size="77" type="text" name="status"><br>
+            <input size="77" type="text" name="status" maxlength="255"><br>
             <input name="statusset" type="submit" value="Set"> <small>max limit: 255 characters</small>
         </form>
         <br>
