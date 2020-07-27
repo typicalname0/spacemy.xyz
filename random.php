@@ -18,7 +18,7 @@
             
             $badges = strpos($row['ranks'], "dev");
             $id = $row['id'];
-            $bio = $row['bio'];
+            $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
             $interests = $row['interests'];
             $user = $row['username'];
             $css = $row['css'];
