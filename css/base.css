@@ -92,3 +92,11 @@ audio {
 .topBarWithItemsThing a {
     color: #838d96;
 }
+
+a center b {
+  margin-right: 10%;
+}
+
+div.friendsGridItem a img {
+  padding-left: 10px;
+}
