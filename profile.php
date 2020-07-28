@@ -27,7 +27,10 @@
             $status = $row['status'];
             $pfp = $row['pfp'];
             $music = $row['music'];
+            $nickname = $row['nickname'];
+            $lastactive = $row['lastactive'];
             $group = $row['currentgroup'];
+            $lastactive = $row['lastactive'];
             if($group !== "") { // let this serve as a reminder that Typical fucked up
                 $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
                 $stmt->bind_param("i", $group);
@@ -74,7 +77,7 @@
                 <div class="LeftHandUserInfo">
                     <br>
                     <br>
-                    <h1 class='username' style='margin: 0px;'><?php echo $user; ?></h1>
+                    <h1 class='username' style='display: inline-block;margin: 0px;'><?php echo $user; ?></h1> <small>[<?php echo $nickname; ?>]</small>
                     <small class='status'><?php echo $status; ?></small>
                     <br>
                     <br>
@@ -96,6 +99,8 @@
                         <br>
                         <?php } ?>
                         <div style="text-align:center;">
+                            Last Active: <b><?php echo $lastactive; ?></b><br>
+                            <br>
                             Current Group: <b><a href="/groups/view.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>

@@ -42,6 +42,13 @@
                 $stmt->execute(); 
                 $stmt->close();
                 header("Location: manage.php");
+            } else if(@$_POST['nicknameset']) {
+                $stmt = $conn->prepare("UPDATE users SET nickname = ? WHERE `users`.`username` = ?;");
+                $stmt->bind_param("ss", $text, $_SESSION['user']);
+                $text = htmlspecialchars($_POST['nickname']);
+                $stmt->execute(); 
+                $stmt->close();
+                header("Location: manage.php");
             } else if(@$_POST['statusset']) {
                 $stmt = $conn->prepare("UPDATE users SET status = ? WHERE `users`.`username` = ?;");
                 $stmt->bind_param("ss", $text, $_SESSION['user']);
@@ -160,6 +167,12 @@
 			<form method="post" enctype="multipart/form-data">
                 <input size="77" type="text" name="status"><br>
 				<input name="statusset" type="submit" value="Set"> <small>max limit: 255 characters</small>
+            </form>
+            <br>
+            <b>Nickname</b>
+			<form method="post" enctype="multipart/form-data">
+                <input size="77" type="text" name="nickname"><br>
+				<input name="nicknameset" type="submit" value="Set"> <small>max limit: 25 characters</small>
             </form>
             <br>
         </div>

@@ -26,10 +26,12 @@
             $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
             $user = $row['username'];
             $status = $row['status'];
+            $nickname = $row['nickname'];
             $css = $row['css'];
             $pfp = $row['pfp'];
             $music = $row['music'];
             $group = $row['currentgroup'];
+            $lastactive = $row['lastactive'];
             $url = "https://".$_SERVER['HTTP_HOST']."/profile.php?id=".$id;
 
             $stmt->close();
@@ -96,7 +98,7 @@
                 <div class="LeftHandUserInfo">
                     <br>
                     <br>
-                    <h1 class='username' style='margin: 0px;'><?php echo $user; ?></h1>
+                    <h1 class='username' style='display: inline-block;margin: 0px;'><?php echo $user; ?></h1> <small>[<?php echo $nickname; ?>]</small>
                     <small class='status'><?php echo $status; ?></small>
                     <br>
                     <br>
@@ -106,9 +108,13 @@
                         <source src="/music/<?php echo $music; ?>" type="audio/ogg">
                     </audio>
                     <br>
-                    <br>
+                    
                     <div class="contactInfo" id="group">
+                        <div class="contactInfoTop" style="text-align:center;">Contact</div>
+
                         <div style="text-align:center;">
+                            Last Active: <b><?php echo $lastactive; ?></b><br>
+                            <br>
                             Current Group: <b><a href="/groups/view.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
                             <br>
                             <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
