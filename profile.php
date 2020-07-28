@@ -1,6 +1,7 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
+    header("Access-Control-Allow-Origin: *");
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,9 @@
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
-                $groupname = $row['name'];
+                if ($row['name']) {
+                    $groupname = $row['name'];
+                } else {$groupname = "None";}
             } else {$groupname = "None";}
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
 
