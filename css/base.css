@@ -92,3 +92,5 @@ audio {
 .topBarWithItemsThing a {
     color: #838d96;
 }
+
+#interests, #bio {padding-bottom: 1em;}

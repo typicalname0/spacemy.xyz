@@ -153,16 +153,12 @@
                 <div class="RightHandUserInfo">
                     <div id="interests">
                         <div class="info" style="text-align: center;">Interests</div>
-                        <?php echo $interests; ?>
+                        <?php echo $interests;?>
                     </div>
-                        <br>
-                        <br>
                     <div id="bio">
                         <div class="info" style="text-align: center;">Bio</div>
                         <?php echo $bio; ?>
                     </div>
-                    <br>
-                    <br>
                     <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
                         <?php if(isset($_SESSION['user'])){ ?>
