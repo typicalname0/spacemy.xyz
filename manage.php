@@ -137,7 +137,8 @@
 				<input type="file" name="fileToUpload" id="fileToUpload">
 				<input type="submit" value="Upload Song" name="photoset">
 			</form>
-            <br>
+            <a href="invite.php">Invites</a>
+            <br><br>
             <b>Bio</b>
 			<form method="post" enctype="multipart/form-data">
 				<textarea required cols="58" placeholder="Bio" name="bio"><?php echo $bio;?></textarea><br>

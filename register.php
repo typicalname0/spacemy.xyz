@@ -16,7 +16,12 @@
             if(!preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $password)) { $error = "please include both letters and numbers in your password"; goto skip; }
             
             if(INVITE_ONLY == true) {
-                if($_POST['key'] != INVITE_KEY) { $error = "invalid key"; goto skip; }
+                $stmt = $conn->prepare("SELECT `invitekey`, `usedBy` FROM `invites` WHERE `invitekey` = ?");
+                $stmt->bind_param("s", $_POST['key']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if (!$result->num_rows) {$error = "Invite key invalid."; goto skip;}
+                if (@$result->fetch_assoc()['usedBy']) {$error = "Invite key used.";goto skip;}
             }
         }
 
@@ -35,6 +40,14 @@
         //TODO: add cloudflare ip thing 
         $stmt = $conn->prepare("INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES (?, ?, ?, now())");
         $stmt->bind_param("sss", $username, $email, $passwordhash);
+        $stmt->execute();
+
+        $stmt = $conn->prepare("SELECT `id` FROM `users` WHERE `username` = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt = $conn->prepare("UPDATE `invites` SET `usedBy` = ? WHERE `invitekey` = ?");
+        $stmt->bind_param("is", $result->fetch_assoc()['id'], $_POST['key']);
         $stmt->execute();
                             
         $stmt->close();
