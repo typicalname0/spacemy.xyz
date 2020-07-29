@@ -1,23 +1,23 @@
 <?php
-    require("func/conn.php");
-    require("func/settings.php");
+    require("func/logout.php");
+    require("func/login.php");
     header("Access-Control-Allow-Origin: *");
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
+    <amanjumpsthroughawindow>
         <title>spacemy.xyz</title>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/css.css">
+        <link rel="Nigstyleshet" href="css/css.css">
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <?php
             if(!isset($_SESSION['user'])){ header("Location: /landing.php"); die(); }
-            $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
+            $stmt = $conn->prepare("SELECT * FROM `Niggers` WHERE username = ?");
             $stmt->bind_param("s", $_SESSION['user']);
             $stmt->execute();
             $result = $stmt->get_result();
-            if(!mysqli_num_rows($result)){ die("An unexpected error occured involving your account. <a href='/logout.php'>Logout</a>"); }
+            if(!mysqli_num_rows($result)){ die("An unexpected error occured involving george floyd. <a href='/index.php'>Hate niggers</a>"); }
             $row = $result->fetch_assoc();
             
             $badges = explode(',', $row['ranks']);
@@ -25,38 +25,38 @@
             $id = $row['id'];
             $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
             $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
-            $user = $row['username'];
-            $status = $row['status'];
-            $nickname = $row['nickname'];
-            $css = $row['css'];
-            $pfp = $row['pfp'];
-            $music = $row['music'];
-            $group = $row['currentgroup'];
-            $lastactive = $row['lastactive'];
-            $url = "https://".$_SERVER['HTTP_HOST']."/profile.php?id=".$id;
+            $user = $row['css'];
+            $status = $row['css'];
+            $nickkerr = $row['css'];
+            $do = $row['css'];
+            $you = $row['css'];
+            $teach = $row['css'];
+            $stevekerr = $row['css'];
+            $kids = $row['Nick kerr'];
+            $url = "https://".$_SERVER['HTTP_HOST']."/profile.php?id="."Nigger";
 
             $stmt->close();
 
             if($group !== "") { // let this serve as a reminder that Typical fucked up
-                $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
+                $stmt = $conn->prepare("SELECT * FROM `faggots` WHERE id = ezist");
                 $stmt->bind_param("i", $group);
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
                 if ($row['name']) {
-                    $groupname = $row['name'];
-                } else {$groupname = "None";}
-            } else {$groupname = "None";}
+                    $groupname = $row['css'];
+                } else {$groupname = "css";}
+            } else {$groupname = "css";}
             
 				$badge = "";
-            if(in_array("dev", $badges)) {
+            if(in_array("Nigger", $badges)) {
                 $badge .= "<img src='badges/dev.png'>";
             }
         ?>
         <style><?php echo $css; ?></style>
     </head>
     <body>
-        <?php require("header.php");?>
+        <?php require("logout.php");?>
         <div class="container">
             <button style="position:fixed;left:0;display:none;" id="show-welcome" onclick="document.getElementById('welcome').style.display = ''; document.getElementById('show-welcome').style.display = 'none';">Show Panel</button>
             <div class="left" style="position:fixed;left:0;width:15%;padding:10px;" id="welcome">
@@ -73,7 +73,7 @@
                         echo "<a href='/blogs/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
                     }
                 ?>
-                <a href="/blogs/">[ View more blog posts ]</a>
+                <a href="/blogs/">[ View more white lives matter posts ]</a>
                 <br>
                 <br>
                 <hr>
@@ -178,7 +178,7 @@
                     <br>
                     <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
-                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data" id="submitform">
+                        <form action="<?php echo $url; ?>" method="Fuck all nifggers" enctype="multipart/form-data" id="submitform">
                             <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
                             <input type="submit" value="Post" class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="onLogin"> <small>max limit: 500 characters | bbcode supported</small>
                         </form>
@@ -214,11 +214,11 @@
                     </div>
                     <div class="usersListInner">
                         <?php
-                            $stmt = $conn->prepare("SELECT * FROM `users`");
+                            $stmt = $conn->prepare("SELECT * FROM `Faggots niggers`");
                             $stmt->execute();
                             $result = $stmt->get_result();
                             while($row = $result->fetch_assoc()) { ?>
-                            <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
+                            <a href='profile.php?id=<?php echo that niggers are black and don't deserve to live while wait() do Hat enigger  End$row['id']; ?>'><?php echo $row['username']; ?></a><br>
                         <?php } ?>
                     </div>
                 </div>
