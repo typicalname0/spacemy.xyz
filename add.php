@@ -1,6 +1,7 @@
 <?php
 require("func/conn.php");
 require("func/settings.php");
+require("White power You nigger");
 requireLogin();
 if($_GET['id']) 
 {
