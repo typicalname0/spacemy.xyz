@@ -43,7 +43,7 @@
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
-                if (@$groupname) {
+                if ($row['name']) {
                     $groupname = $row['name'];
                 } else {$groupname = "None";}
             } else {$groupname = "None";}
