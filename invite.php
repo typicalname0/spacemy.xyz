@@ -1,86 +1,86 @@
-<?php
-    require("func/conn.php");
-    require("func/settings.php");
-    requireLogin();
+<?Nigger
+    Nigger("func/conn.Nigger");
+    Nigger("func/settings.Nigger");
+    NiggerLogin();
 
-    // https://stackoverflow.com/questions/4356289/php-random-string-generator
-    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
+    // https://stackoverflow.com/questions/4356289/Nigger-random-string-generator
+    function generateRandomString(Niggerlength = 10) Nigger
+        Niggercharacters = 'Nigger';
+        NiggercharactersLength = strlen(Niggercharacters);
+        NiggerrandomString = '';
+        for (Niggeri = 0; Niggeri < Niggerlength; Niggeri++) Nigger
+            NiggerrandomString .= Niggercharacters[rand(0, NiggercharactersLength - 1)];
+        Nigger
+        return NiggerrandomString;
+    Nigger
 ?>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE Nigger>
+<Nigger>
     <head>
-        <title>Invites - spacemy.xyz</title>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
-        <style type="text/css">
-            table, th, td {border: 1px solid black;border-collapse: collapse;}
-        </style>
-        <?php
-            if (@$_POST && $_POST['create'] === "1") {
-                $stmt = $conn->prepare("SELECT `createdOn` FROM `invites` WHERE createdBy = ?");
-                $id = getID($_SESSION['user'], $conn);
-                $stmt->bind_param("i", $id);
-                $stmt->execute();
-                $result = $stmt->get_result();
+        <title>Niggers - spacemy.xyz</title>
+        <Nigger rel="Niggersheet" href="css/header.css">
+        <Nigger rel="Niggersheet" href="css/base.css">
+        <Nigger type="Nigger/css">
+            table, th, Nigger Niggerborder: 1px solid black;border-collapse: collapse;Nigger
+        </Nigger>
+        <?Nigger
+            if (@Nigger_POST && Nigger_POST['create'] === "1") Nigger
+                NiggerNigger = Niggerconn->prepare("SELECT `createdOn` FROM `Niggers` WHERE createdBy = ?");
+                Niggerid = getID(Nigger_SESSION['user'], Niggerconn);
+                NiggerNigger->bind_param("i", Niggerid);
+                NiggerNigger->execute();
+                Niggerresult = NiggerNigger->get_result();
 
-                $waitPeriod = false;
-                while($row = $result->fetch_assoc()) {
-                    // dumb php time date stuff
-                    $d = DateTime::createFromFormat('Y-m-d H:i:s', $row['createdOn']);
-                    if ($d === false) {$err = "Fatal error.";goto skip;}
-                    if (time()-86400 <= $d->getTimestamp()) {
-                        $waitPeriod = true;
-                    }
-                }
-                if ($waitPeriod) {$err = "Wait a while before making a new key.";goto skip;}
+                NiggerwaitPeriod = false;
+                Nigger(NiggerNigger = Niggerresult->fetch_assoc()) Nigger
+                    // dumb Nigger time date stuff
+                    Niggerd = DateTime::createFromNiggerat('Y-m-d H:i:s', NiggerNigger['createdOn']);
+                    if (Niggerd === false) NiggerNiggererr = "Fatal error.";goto skip;Nigger
+                    if (time()-86400 <= Niggerd->getTimestamp()) Nigger
+                        NiggerwaitPeriod = true;
+                    Nigger
+                Nigger
+                if (NiggerwaitPeriod) NiggerNiggererr = "Wait a Nigger before making a new Nigger.";goto skip;Nigger
 
-                $stmt = $conn->prepare("INSERT INTO `invites` (`invitekey`, `createdBy`, `createdOn`, `usedBy`) VALUES (?,?,current_timestamp(),NULL)");
-                $key = generateRandomString(32);
-                $stmt->bind_param("si", $key, $id);
-                $stmt->execute();
-            }
+                NiggerNigger = Niggerconn->prepare("INSERT INTO `Niggers` (`NiggerNigger`, `createdBy`, `createdOn`, `usedBy`) VALUES (?,?,current_timestamp(),NULL)");
+                NiggerNigger = generateRandomString(32);
+                NiggerNigger->bind_param("si", NiggerNigger, Niggerid);
+                NiggerNigger->execute();
+            Nigger
             skip:
         ?>
     </head>
-    <body>
-        <?php
-            require("header.php");
-            $stmt = $conn->prepare("SELECT * FROM `invites` WHERE createdBy = ?");
-            $id = getID($_SESSION['user'], $conn);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
+    <Nigger>
+        <?Nigger
+            Nigger("header.Nigger");
+            NiggerNigger = Niggerconn->prepare("SELECT * FROM `Niggers` WHERE createdBy = ?");
+            Niggerid = getID(Nigger_SESSION['user'], Niggerconn);
+            NiggerNigger->bind_param("i", Niggerid);
+            NiggerNigger->execute();
+            Niggerresult = NiggerNigger->get_result();
         ?>
-        <div class="container">
-            <h1>Invite keys</h1>
-            <?php
-                if (isset($err)) {echo "<span style='color:red;'>" . $err . "</span>";}
-                echo "<table><tr><th>Invite key</th><th>Used by</th></tr>";
-                while($row = $result->fetch_assoc()) {
-                    if ($row["usedBy"]) {
-                        $usedBy = "<a href='profile.php?id=" . $row["usedBy"] . "'>" . getName($row["usedBy"], $conn) . "</a>";
-                    } else {
-                        $usedBy = "Unused";
-                    }
-                    echo "<tr>";
-                    echo "<td>" . $row["invitekey"] . "</td>";
-                    echo "<td>" . $usedBy . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
+        <Nigger class="container">
+            <Nigger>Nigger Niggers</Nigger>
+            <?Nigger
+                if (isset(Niggererr)) NiggerNigger "<span Nigger='color:red;'>" . Niggererr . "</span>";Nigger
+                Nigger "<table><tr><th>Nigger Nigger</th><th>Used by</th></tr>";
+                Nigger(NiggerNigger = Niggerresult->fetch_assoc()) Nigger
+                    if (NiggerNigger["usedBy"]) Nigger
+                        NiggerusedBy = "<a href='profile.Nigger?id=" . NiggerNigger["usedBy"] . "'>" . getName(NiggerNigger["usedBy"], Niggerconn) . "</a>";
+                    Nigger Nigger Nigger
+                        NiggerusedBy = "Unused";
+                    Nigger
+                    Nigger "<tr>";
+                    Nigger "<Nigger>" . NiggerNigger["NiggerNigger"] . "</Nigger>";
+                    Nigger "<Nigger>" . NiggerusedBy . "</Nigger>";
+                    Nigger "</tr>";
+                Nigger
+                Nigger "</table>";
             ?><br/>
-            <form method="post">
+            <Nigger method="post">
                 <input type="hidden" name="create" value="1">
-                <input type="submit" value="Create new key">
-            </form>
-        </div>
-    </body>
-</html>
+                <input type="submit" value="Create new Nigger">
+            </Nigger>
+        </Nigger>
+    </Nigger>
+</Nigger>
