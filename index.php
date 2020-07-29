@@ -1,228 +1,153 @@
-<?php
-    require("func/conn.php");
-    require("func/settings.php");
-    header("Access-Control-Allow-Origin: *");
-?>
-<!DOCTYPE html>
+
 <html>
-    <head>
-        <title>spacemy.xyz</title>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/base.css">
-        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-        <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
-        <?php
-            if(!isset($_SESSION['user'])){ header("Location: /landing.php"); die(); }
-            $stmt = $conn->prepare("SELECT * FROM `users` WHERE username = ?");
-            $stmt->bind_param("s", $_SESSION['user']);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if(!mysqli_num_rows($result)){ die("An unexpected error occured involving your account. <a href='/logout.php'>Logout</a>"); }
-            $row = $result->fetch_assoc();
-            
-            $badges = explode(',', $row['ranks']);
-				if (!$badges) {$badges = [];}
-            $id = $row['id'];
-            $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
-            $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
-            $user = $row['username'];
-            $status = $row['status'];
-            $nickname = $row['nickname'];
-            $css = $row['css'];
-            $pfp = $row['pfp'];
-            $music = $row['music'];
-            $group = $row['currentgroup'];
-            $lastactive = $row['lastactive'];
-            $url = "https://".$_SERVER['HTTP_HOST']."/profile.php?id=".$id;
-
-            $stmt->close();
-
-            if($group !== "") { // let this serve as a reminder that Typical fucked up
-                $stmt = $conn->prepare("SELECT * FROM `groups` WHERE id = ?");
-                $stmt->bind_param("i", $group);
-                $stmt->execute();
-
-                $row = $stmt->get_result()->fetch_assoc();
-                if ($row['name']) {
-                    $groupname = $row['name'];
-                } else {$groupname = "None";}
-            } else {$groupname = "None";}
-            
-				$badge = "";
-            if(in_array("dev", $badges)) {
-                $badge .= "<img src='badges/dev.png'>";
-            }
-        ?>
-        <style><?php echo $css; ?></style>
-    </head>
-    <body>
-        <?php require("header.php");?>
-        <div class="container">
-            <button style="position:fixed;left:0;display:none;" id="show-welcome" onclick="document.getElementById('welcome').style.display = ''; document.getElementById('show-welcome').style.display = 'none';">Show Panel</button>
-            <div class="left" style="position:fixed;left:0;width:15%;padding:10px;" id="welcome">
-                Welcome, <?php echo $user; ?>! <button onclick="document.getElementById('welcome').style.display = 'none'; document.getElementById('show-welcome').style.display = '';">Hide Panel</button>
-                <hr>
-                <div class="info">
-                    Latest Blog Posts
-                </div>
-                <br>
-                <?php
-                    $result = $conn->query("SELECT id, title, author FROM `blogs` ORDER BY id DESC LIMIT 5");
-                    while($row = $result->fetch_assoc()) 
-                    {
-                        echo "<a href='/blogs/view.php?id=".$row['id']."'>".$row['title']."</a> - by <a href='/profile.php?id=".getID($row['author'], $conn)."'>".$row['author']."</a><br><br>";
-                    }
-                ?>
-                <a href="/blogs/">[ View more blog posts ]</a>
-                <br>
-                <br>
-                <hr>
-                <div class="info">
-                    Check these groups out
-                </div>
-                <br>
-                <?php
-                    $stmt = $conn->prepare("SELECT id, name, (SELECT COUNT(*) FROM `users` WHERE currentgroup = name) FROM `groups` WHERE NOT author = ? ORDER BY RAND() LIMIT 5");
-                    $stmt->bind_param("s", $user);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    while($row = $result->fetch_assoc()) 
-                    {
-                        $memberCount = $row['(SELECT COUNT(*) FROM `users` WHERE currentgroup = name)']; //cant really do this any other way lol
-                        if(!$memberCount){ $memberCount = "No"; }
-                        echo "<a href='/groups/view.php?id=".$row['id']."'>".$row['name']."</a> - ".$memberCount." member(s)<br><br>";
-                    }
-                ?>
-                <a href="/groups/">[ View more groups ]</a>
-                <br>
-                <br>
-            </div>
-            <div class="left">
-                <div class="LeftHandUserInfo">
-                    <br>
-                    <br>
-                    <h1 class='username' style='display: inline-block;margin: 0px;'><?php echo $user; ?></h1> <small>[<?php echo $nickname; ?>]</small>
-                    <small class='status'><?php echo $status; ?></small>
-                    <br>
-                    <br>
-                    <img class='pfp' width='235px;' src='/pfp/<?php echo $pfp; ?>'>
-                    <hr>
-                    <audio controls autoplay>
-                        <source src="/music/<?php echo $music; ?>" type="audio/ogg">
-                    </audio>
-                    <br>
-                    
-                    <div class="contactInfo" id="group">
-                        <div class="contactInfoTop" style="text-align:center;">Contact</div>
-
-                        <div style="text-align:center;">
-                            Last Active: <b><?php echo $lastactive; ?></b><br>
-                            <br>
-                            Current Group: <b><a href="/groups/view.php?id=<?php echo $group;?>"><?php echo $groupname; ?></a></b>
-                            <br>
-                            <small><a href="<?php echo $url; ?>"><?php echo $url; ?></a></small>
-                        </div>
-                    </div><br>
-                    <div class="contactInfo" id="badges">
-                        <div class="contactInfoTop" style="text-align:center;">Badges</div>
-                        <?php echo $badge; ?>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="contactInfo" id="blogs">
-                        <div class="contactInfoTop" style="text-align:center;">Blogs</div>
-                    <?php
-                        //specify only the columns you need to conserve performace because you dont need to fetch the entire blog post body for the profile
-                        $stmt = $conn->prepare("SELECT id, title FROM `blogs` WHERE author = ?");
-                        $stmt->bind_param("s", $user);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while($row = $result->fetch_assoc()) { ?>
-                        <a href='/blogs/view.php?id=<?php echo $row['id']; ?>'><?php echo $row['title']; ?></a>
-                        <br>
-                    <?php } ?>
-                    </div>
-                    <br>
-                    <div class="contactInfo" id="friends">
-                        <div class="contactInfoTop" style="text-align: center;">Friends</div>
-                        <?php
-                            $stmt = $conn->prepare("SELECT * FROM `friends` WHERE (sender = ? OR reciever = ?) AND status = 'ACCEPTED'");
-                            $stmt->bind_param("ss", $user, $user);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            
-                            while($row = $result->fetch_assoc()) 
-                            { 
-                                if($row['sender'] == $user){ $friend = $row['reciever']; } else{ $friend = $row['sender']; }
-                                echo "<a href='/profile.php?id=".getID($friend, $conn)."'><img width='40px' height='40px' src='pfp/".getPFP($friend, $conn)."'></a>";
-                            }
-                        ?>
-                    </div>
-                </div>
-            </div>
-            <div class="right">
-                <br>
-                <br>
-                <div class="RightHandUserInfo">
-                    <div id="interests">
-                        <div class="info" style="text-align: center;">Interests</div>
-                        <?php echo $interests; ?>
-                    </div>
-                        <br>
-                        <br>
-                    <div id="bio">
-                        <div class="info" style="text-align: center;">Bio</div>
-                        <?php echo $bio; ?>
-                    </div>
-                    <br>
-                    <br>
-                    <div id="comments">
-                        <div class="info" style="text-align: center;">Comments</div>
-                        <form action="<?php echo $url; ?>" method="post" enctype="multipart/form-data" id="submitform">
-                            <textarea required cols="43" placeholder="Comment" name="comment"></textarea><br>
-                            <input type="submit" value="Post" class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="onLogin"> <small>max limit: 500 characters | bbcode supported</small>
-                        </form>
-                        <hr>
-                        <div class="commentsList">
-                        <?php
-                            $stmt = $conn->prepare("SELECT * FROM `comments` WHERE toid = ? ORDER BY id DESC");
-                            $stmt->bind_param("s", $id);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            
-                            while($row = $result->fetch_assoc()) { ?>
-                                <div class='commentRight' style='display: grid; grid-template-columns: 75% auto; padding:5px;'>
-                                    <div style="word-wrap: break-word;">
-                                        <small><?php echo $row['date']; ?> <a href="deletecomment.php?id=<?php echo $row['id']; ?>">[delete]</a></small>
-                                        <br>
-                                        <?php echo $row['text']; ?>
-                                    </div>
-                                    <div>
-                                        <a style='float: right;' href='profile.php?id=<?php echo getID($row['author'], $conn); ?>'><?php echo $row['author']; ?></a>
-                                        <br>
-                                        <img class='commentPictures' style='float: right;' height='80px;'width='80px;'src='pfp/<?php echo getPFP($row['author'], $conn); ?>'>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="usersList">
-                    <div class="info">
-                        Users
-                    </div>
-                    <div class="usersListInner">
-                        <?php
-                            $stmt = $conn->prepare("SELECT * FROM `users`");
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            while($row = $result->fetch_assoc()) { ?>
-                            <a href='profile.php?id=<?php echo $row['id']; ?>'><?php echo $row['username']; ?></a><br>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+<head>
+<meta name="google-site-verification" content="CNeSVBPoYr-pdVbLv-Cor5DkmNLm8U0DG9EUwah0RWU" />
+<style type="text/css">
+body 
+{
+background-image: "background1.jpg";
+background-repeat: repeat;
+background-attachment: fixed
+}
+a:link {
+	color: #FFFFFF;
+}
+a:visited {
+	color: #FFFFFF;
+}
+a:hover {
+	color: #FFFFFF;
+}
+a:active {
+	color: #FFFFFF;
+}
+.style2 {color: #000000}
+.style3 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.style4 {color: #333333}
+.style5 {color: #FFFF00}
+.style6 {
+	color: #FFFFFF;
+	font-size: 36px;
+}
+</style>
+<head>
+<TITLE>Niggermania | Nigger Jokes and Facts about Niggers</TITLE>
+<LINK REV="made" href="mailto:tomshelly@rocketmail.com">
+<META NAME="keywords" CONTENT="nigger, jokes, racist, humor, niggers, coontact, Raptorman, Tom Shelly, niggermania, racism">
+<META NAME="description" CONTENT="Niggermania is the best site for nigger jokes, rants, and racist humor.">
+<META NAME="author" CONTENT="Tom Shelly">
+<META NAME="ROBOTS" CONTENT="ALL">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="shortcut icon" href="kickass.jpg" >
+</head>
+<body background="background1.jpg" bgcolor="#C0C0C0" text="#66FF00">
+<center>
+  <p><a href="http://niggermania.co"><img src="niggermania.jpg" alt="Nigger and Niggers" width="570" height="174"></a></p>
+  <p>Niggermania  for <strong>nigger</strong> jokes and facts about <strong>niggers</strong> since 2003 </p>
+  <p align="center">If this site goes down, visit the links below for up to date information about Niggermania:</p>
+  <p align="center">(bookmark them)</p>
+  <p align="center"><a href="https://nwordmania.blogspot.com.au/">http://nwordmania.blogspot.com.au/</a> </p>
+  <p align="center"><a href="http://uglynigger.com">uglynigger.com</a> - <a href="http://niggermania.com">niggermania.com</a> - <a href="http://niggermania.net">niggermania.net</a></p>
+  <p><a href="http://niggermania.co">Niggermania.co</a>  </p>
+  <p><strong><font color="#FFFF00" size="6"><a href="http://niggermania.co/forum/">Click HERE</a> for the Forums of Niggermania !</font></strong>  </p>
+  <p>Why does your page look so shitty? <a href="info/index.html">CLICK HERE</a></p>
+  <table width="691" height="145" border="1" cellpadding="5">
+    <tr>
+      <td width="334"><div align="center"><a href="/tom/"><strong><font size="4">Tom Shelly's Niggermania Page</font></strong></a><br>
+          <strong>Wild Nigger Animal Park, Shelly<br>
+Publishing, Back To Africa Initiative<br>
+And Much More!</strong></div></td>
+      <td width="325"><p align="center"><a href="/raptorman/raptorman.html"><strong><font size="4">Raptorman's 
+          Niggermania Page</font></strong></a><br>
+          <strong>Coontact Tales,  Niggerama & Collection<br>
+Of Nigger Essay's From The Web</strong></p>
+      </td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="691" height="145" border="1" cellpadding="5">
+    <tr>
+      <td width="334"><div align="center"><a href="/afnfaq/"><strong><font size="4">Reb Biker's Famous AFN- FAQ</font></strong></a><br>
+          <strong>The Oldest Nigger Bashing Page<br>
+          On The World Wide Web<br>
+      From alt.flame.niggers</strong></div></td>
+      <td width="325"><p align="center"><strong><font size="4"><a href="groidssuck/index.html">Groidssuck's Niggermania Page</a></font></strong> </p>
+      <p align="center"><strong>Hilarious Posters, Animations, Smileys, &amp; More from Groidssuck </strong></p></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="1118" height="202" border="1">
+    <tbody>
+      <tr>
+        <td width="339"><strong><font size="3"><a href="thevirus/virus.html">An Exclusive Online 
+        Book "The Virus"</a></font></strong></td>
+        <td width="362"><a href="/purpose.shtml"><strong>Niggermania Explains Why Hate Is Wrong</strong></a></td>
+        <td width="395"><a href="/raptorman/rap/rap.htm"><strong>Who Really Promotes 
+    Interracial Violence?</strong></a> <span class="style2">...</span></td>
+      </tr>
+      <tr>
+        <td><span class="style2">.</span><span class="style3"><a href="library/index.html">Niggermania's Library</a></span></td>
+        <td><a href="niggerjokes/index.htm"><strong>Niggermania's Nigger 
+    Jokes</strong></a> <span class="style4">.</span></td>
+        <td><a href="dna/index.html"><strong>Nigger Genes Cause them to be Niggers </strong></a></td>
+      </tr>
+      <tr>
+        <td><strong><a href="promotion/index.htm">Help Promote Niggermania</a></strong></td>
+        <td><a href="equality facts/index.htm"><strong>Equality Facts</strong></a></td>
+        <td>&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p align="center">&nbsp;</p>
+  <p align="center"><font size="5"><strong>Outside <font color="#00FF00">Links</font></strong></font></p>
+  <strong> 
+  <p align="center"><a href="http://www.newnation.org/">| New Nation News</a> | 
+    <a href="http://www.newnation.org/TNB-reports.html">Tyrone N. Butts Report</a> 
+  | <a href="http://www.colorofcrime.com/">The Color of Crime</a>|  
+  <br>
+    <a href="http://www.racismeantiblanc.bizland.com/005/index.htm"></a> | <a href="http://affirmativeactionhoax.com/">The 
+        Affirmative Action Hoax</a><br>
+  <p>Niggers & Education</p>
+  </strong>
+  <p><strong><a href="http://www.lagriffedulion.f2s.com/retard.htm">THE POLITICS OF MENTAL 
+  RETARDATION: A TALE OF THE BELL CURVE</a></strong></p>
+  <p><strong><a href="http://www.amren.com/features/2014/09/all-i-really-need-to-know-about-race-i-learned-teaching-in-kindergarten/">What I Learned in Kindergarten, A Teacher's Tale of Teaching Nigglets </a><br>
+    <a href="http://www.americancivilrightsreview.com/africanfailure.html"></a><br>
+  </strong></p>
+  <strong>
+  <p>African Links</p>
+  <p><a href="https://deathofjohannesburg.blogspot.com/"> The Death of Johannesburg 
+    (Blog)</a> | <br>
+    <a href="https://en.metapedia.org/wiki/The_Affirmative_Action_Hoax:_Diversity,_the_Importance_of_Character_and_Other_Lies?__cf_chl_jschl_tk__=0642d193910ff54a62434019043199ce7ab067db-1583267727-0-AXON6WVC0caBM4J1Hz9SSWhJ9JN3Yf3FphW4bJ9ZKxm7G5I4oll2dY6xhm5J6dXoc4RuADh7q6hec-AQwQYCt5wkLqiJVUN3KGL0ivv_GbU6KQfwptyoxGwSjC54jpOxposO24aC1cbLmpR5oQW4-yySE68bOYwWMa0mDcLlfYph58dYevogEXgxppgfR2hvx09FlGPyAOVu89LmiPqUPLqLfZD8tYcNmpGIu7lWd3QshjO-TNvyy2k3WgvNhxvDMsZItgV5WWX5T7L-gx8AkfLO5VkGvq5l-usPe8r2AVAT-p-OimliEAOZ1GhsmxaA2sm1SHgKcHQJflk66SzGYzw8lqjpgoPDZL459fhLkv8HzSHy6w3DiqLeUxsQ7VKHDyi_qEAxSMliUBXKjdBCnCM">Requiem for Rhodesia</a> </p>
+  <p>European Links</p>
+  <p><a href="http://www.ety.com/HRP/race/raclist.htm"></a> 
+    | <a href="http://www.brusselsjournal.com/">Brussels Journal</a> |</p>
+  <p>Online Books</p>
+  <p> <a href="http://docsouth.unc.edu/church/thomas/thomas.html">The American 
+    Negro: What He Was, What He Is, and What He May Become:<br>
+    A Critical and Practical Discussion By William Hannibal Thomas, b. 1843</a></p>
+  <p><br>
+    <a href="https://www.siteadvisor.com/sites/niggermania.com">Niggermania.com 
+    and Niggermania.net Found "Safe" by McAfee!</a></p>
+  <a href="https://www.siteadvisor.com/sites/niggermania.net">Niggermania.net 
+    Found "Safe" by McAfee too!</a>
+  <p>&nbsp;</p>
+  </strong>
+  <p><font color="#FFFF00" size="5">********************************************</font> 
+  </p>
+  <p><font color="#FFFF00" size="3">Niggermania.CO - Niggermania.COM - Niggermania.NET - Uglynigger.COM are the 
+    only official domains of Niggermania</font></p>
+  <p align="center" class="style5"><font size="4">If this site goes down, visit the link below for up to date information:</font></p>
+  <p align="center"><a href="https://nwordmania.blogspot.com.au/">http://nwordmania.blogspot.com.au/</a></p>
+  <p align="center">(I suggest you bookmark it)</p>
+  <p><strong>Contact Site Administrator: <font color="#33FF00" size="4"> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc8893918f9499909085bc8e939f979988919d9590d29f9391">[email&#160;protected]</a> </font></strong></p>
+  <p><font color="#FFFF00" size="5">********************************************</font></p>
+  <p>&nbsp;</p>
+  <p>Copyright 2020, Tom Shelly,, All rights reserved</p>
+</center>
+</font></strong>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
