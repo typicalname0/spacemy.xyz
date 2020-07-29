@@ -30,9 +30,11 @@ function validateCaptcha($privatekey, $response) {
 	return $responseData->success;
 }
 
-function requireLogin()
-{
+function requireLogin() {
 	if(!isset($_SESSION['user'])){ header("Location: /login.php"); die(); }
+}
+function unrequireLogin() {
+	if(isset($_SESSION['user'])) {header("Location: /login.php");die();}
 }
 
 function getID($user, $connection) {

@@ -1,6 +1,7 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
+    unrequireLogin();
     if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['password'] && $_POST['username']) 
     {
         $email = htmlspecialchars(@$_POST['email']);
