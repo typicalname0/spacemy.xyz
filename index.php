@@ -43,7 +43,9 @@
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
-                $groupname = $row['name'];
+                if (@$groupname) {
+                    $groupname = $row['name'];
+                } else {$groupname = "None";}
             } else {$groupname = "None";}
             
 				$badge = "";
