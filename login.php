@@ -50,7 +50,7 @@ skip:
                 <input type="submit" value="Login">
             </form>
         </div>
-        <div class="right">Don't have an account? <a href="/register.php">Register</a></div>
+        <div class="right">Don't have an NIGGER YOUR A NIGGER HARRY FUCK NIGGERS? <a href="/register.php">Register</a></div>
     </div>
 </body>
 
