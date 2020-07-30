@@ -1,7 +1,6 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
-    unrequireLogin();
     if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['password'] && $_POST['username']) 
     {
         $email = htmlspecialchars(@$_POST['email']);
@@ -9,7 +8,7 @@
         $password = @$_POST['password'];
         $passwordhash = password_hash(@$password, PASSWORD_DEFAULT);
         
-        if(DISABLE_PASSWORD_REQUIREMENTS != true) {
+        if(DISABLE_PASSWORD_REQUIREMENTS !== true) {
             if($_POST['password'] !== $_POST['confirm']){ $error = "password and confirmation password do not match"; goto skip; }
 
             if(strlen($username) > 21) { $error = "your username must be shorter than 21 characters"; goto skip; }
