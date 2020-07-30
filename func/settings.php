@@ -7,8 +7,8 @@ define("VIDEOS_MODULE", false);
 define("DISABLE_PASSWORD_REQUIREMENTS", false);
 define("FRIENDS_MAX_LIMIT", null); //not implemented yet
 
-if(INVITE_ONLY === true) { define("INVITE_KEY", md5("sdjg")); }
-if(DEBUG === true) {
+if(INVITE_ONLY == true) { define("INVITE_KEY", md5("sdjg")); }
+if(DEBUG == true) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
