@@ -18,6 +18,7 @@ Though SpaceMy is actively being developed by a community of 50+ people (private
 - Inspiration: Everyone who has helped me work on this project, and all the amazing people in our discord.
 - Programming: TypicalName, ezist, pizzaboxer, lolita, kermeet, KJF
 - Website Design: TypicalName, pizzaboxer
+- Words of encouragement:  lighterlightbulb AKA carrot AKA swirlin AKA karrot AKA qarrot (@lighterlightbulb)
 
 ## Setup
 Download/clone the repo: ``git clone https://github.com/typicalname0/spacemy.xyz.git``
