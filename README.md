@@ -24,6 +24,9 @@ Download/clone the repo: ``git clone https://github.com/typicalname0/spacemy.xyz
 
 Log into your MySQL server and import ``spacemy.sql``
 
+## Notice
+Please be advised that this is the official SpaceMy repository. We have been anonymously notified by someone that there exists a fraud copy of this code in order to trick and decieve users into giving away their passwords. Action has since been taken and GitHub has been contacted about this issue, but please be advised that all information about SpaceMy development will come from here.
+
 ## License
 We use the Apache License 2.0.
 
