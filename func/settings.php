@@ -7,8 +7,8 @@ define("VIDEOS_MODULE", false);
 define("DISABLE_PASSWORD_REQUIREMENTS", false);
 define("FRIENDS_MAX_LIMIT", null); //not implemented yet
 
-if(INVITE_ONLY == true) { define("INVITE_KEY", ""); }
-if(DEBUG == true) {
+if(INVITE_ONLY === true) { define("INVITE_KEY", md5("sdjg")); }
+if(DEBUG === true) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -19,8 +19,8 @@ session_start();
 require_once('bbcode.php');
 
 function validateCSS($validate) {
-	$searchVal = array("<", ">", "<?php", "?>", "behavior: url", ".php"); 
-	$replaceVal = array("", "", "", "", "", ""); 
+	$searchVal = array("<", ">", "<?php", "?>", "behavior: url", ".php", "@import"); 
+	$replaceVal = array("", "", "", "", "", "", ""); 
 	$validated = str_replace($searchVal, $replaceVal, $validate); 
     return $validated;
 }
@@ -30,11 +30,9 @@ function validateCaptcha($privatekey, $response) {
 	return $responseData->success;
 }
 
-function requireLogin() {
+function requireLogin()
+{
 	if(!isset($_SESSION['user'])){ header("Location: /login.php"); die(); }
-}
-function unrequireLogin() {
-	if(isset($_SESSION['user'])) {header("Location: /login.php");die();}
 }
 
 function getID($user, $connection) {
@@ -90,4 +88,3 @@ function checkIfFriended($friend1, $friend2, $connection)
 function replaceBBcodes($text) {
 	return bbcode_to_html($text);
 }
-?>

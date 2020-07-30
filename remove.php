@@ -10,4 +10,3 @@ if((int)$_GET['id']) {
     $stmt->close();
     header("Location: friends.php");
 }
-?>

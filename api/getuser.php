@@ -31,4 +31,3 @@ if(isset($_GET['name'])) {
     $array->response = "You did not specify a name.";
     echo json_encode($array);
 }
-?>

@@ -27,4 +27,3 @@ if($_GET['id'])
 
     header("Location: friends.php");
 } else { header("Location: /"); }
-?>

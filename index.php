@@ -21,7 +21,7 @@
             $row = $result->fetch_assoc();
             
             $badges = explode(',', $row['ranks']);
-				if (!$badges) {$badges = [];}
+				if (!$badges) {$badges = [''];}
             $id = $row['id'];
             $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
             $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));

@@ -19,4 +19,3 @@ if((int)$_GET['id']) {
     }
     header("Location: index.php");
 }
-?>

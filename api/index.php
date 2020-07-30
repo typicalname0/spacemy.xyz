@@ -32,4 +32,3 @@ if(isset($_GET['id'])) {
     $array->response = "You did not specify a ID.";
     echo json_encode($array);
 }
-?>
