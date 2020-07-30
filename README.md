@@ -1,5 +1,8 @@
 # spacemy.xyz
-
+[![Build Status](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/build.png?b=master)](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+[![Code Coverage](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/?branch=master)
 ## Our Goal
 Our goal is to bring back the days of the good old MySpace (circa 2008)
 
