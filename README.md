@@ -28,6 +28,9 @@ Log into your MySQL server and import ``spacemy.sql``
 ## Notice
 Please be advised that this is the official SpaceMy repository. We have been anonymously notified by someone that there exists a fraud copy of this code in order to trick and decieve users into giving away their passwords. Action has since been taken and GitHub has been contacted about this issue, but please be advised that all information about SpaceMy development will come from here.
 
+
+Please also keep in mind that the only official trusted sites where you can utilize spacemy are 'spacemy.xyz' and 'spacemy.boxerpizza.ml.' Thank you!
+
 ## License
 We use the Apache License 2.0.
 
