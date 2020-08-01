@@ -1,7 +1,6 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
-    header("Access-Control-Allow-Origin: *");
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,10 +18,13 @@
             $row = $result->fetch_assoc(); //you dont need to do a while loop because you're only fetching one result
             
             $badges = explode(',', $row['ranks']);
-				if (!$badges) {$badges = [''];}
+				if (!$badges) {$badges = [];}
             $id = $_GET['id'];
             $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
             $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
+            $find = array('"', "'");
+            $replace = array("", "");
+
             $user = $row['username'];
             $css = $row['css'];
             $status = $row['status'];
@@ -38,9 +40,7 @@
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
-                if ($row['name']) {
-                    $groupname = $row['name'];
-                } else {$groupname = "None";}
+                $groupname = $row['name'];
             } else {$groupname = "None";}
             $url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$id;
 
@@ -69,7 +69,7 @@
         <title><?php echo $user;?> - spacemy.xyz</title>
         <meta property="og:site_name" content="spacemy.xyz"/>
         <meta property="og:title" content="<?php echo $user; ?>"/>
-        <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo $pfp; ?>"/>
+        <meta property="og:image" content="https://spacemy.xyz/pfp/<?php echo htmlspecialchars($pfp); ?>"/>
         <meta property="og:description" content="<?php echo htmlspecialchars(str_replace("<br>", PHP_EOL, $bio)); ?>" />
         <style><?php echo $css; ?></style>
     </head>
@@ -84,10 +84,10 @@
                     <small class='status'><?php echo $status; ?></small>
                     <br>
                     <br>
-                    <img class='pfp' width='235px;' src='/pfp/<?php echo $pfp; ?>'>
+                    <img class='pfp' width='235px;' src='/pfp/<?php echo getPFP($user, $conn); ?>'>
                     <hr>
                     <audio controls autoplay>
-                        <source src="/music/<?php echo $music; ?>" type="audio/ogg">
+                        <source src="/music/<?php echo htmlspecialchars($music); ?>" type="audio/ogg">
                     </audio>
                     <br>
                     <br>
@@ -153,12 +153,16 @@
                 <div class="RightHandUserInfo">
                     <div id="interests">
                         <div class="info" style="text-align: center;">Interests</div>
-                        <?php echo $interests;?>
+                        <?php echo $interests; ?>
+                        <br>
+                        <br>
                     </div>
                     <div id="bio">
                         <div class="info" style="text-align: center;">Bio</div>
                         <?php echo $bio; ?>
                     </div>
+                    <br>
+                    <br>
                     <div id="comments">
                         <div class="info" style="text-align: center;">Comments</div>
                         <?php if(isset($_SESSION['user'])){ ?>

@@ -19,8 +19,8 @@ session_start();
 require_once('bbcode.php');
 
 function validateCSS($validate) {
-	$searchVal = array("<", ">", "<?php", "?>", "behavior: url", ".php", "@import"); 
-	$replaceVal = array("", "", "", "", "", "", ""); 
+	$searchVal = array("<", ">", "<?php", "?>", "behavior: url", ".php", "@import", "@\import", "@/import"); 
+	$replaceVal = array("", "", "", "", "", "", "", "", ""); 
 	$validated = str_replace($searchVal, $replaceVal, $validate); 
     return $validated;
 }
@@ -55,7 +55,7 @@ function getName($id, $connection) {
 	$result = $stmt->get_result();
 	if($result->num_rows === 0) return('error');
 	while($row = $result->fetch_assoc()) {
-		$name = $row['username'];
+		$name = htmlspecialchars($row['username']);
 	} 
 	$stmt->close();
 	return $name;
@@ -68,7 +68,7 @@ function getPFP($user, $connection) {
 	$result = $stmt->get_result();
 	if($result->num_rows === 0) return('error');
 	while($row = $result->fetch_assoc()) {
-		$pfp = $row['pfp'];
+		$pfp = htmlspecialchars($row['pfp']);
 	} 
 	$stmt->close();
 	return $pfp;

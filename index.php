@@ -1,7 +1,6 @@
 <?php
     require("func/conn.php");
     require("func/settings.php");
-    header("Access-Control-Allow-Origin: *");
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,8 +19,11 @@
             if(!mysqli_num_rows($result)){ die("An unexpected error occured involving your account. <a href='/logout.php'>Logout</a>"); }
             $row = $result->fetch_assoc();
             
+            $find = array('"', "'");
+            $replace = array("", "");
+
             $badges = explode(',', $row['ranks']);
-				if (!$badges) {$badges = [''];}
+				if (!$badges) {$badges = [];}
             $id = $row['id'];
             $bio = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['bio']));
             $interests = str_replace(PHP_EOL, "<br>", replaceBBcodes($row['interests']));
@@ -43,9 +45,7 @@
                 $stmt->execute();
 
                 $row = $stmt->get_result()->fetch_assoc();
-                if ($row['name']) {
-                    $groupname = $row['name'];
-                } else {$groupname = "None";}
+                $groupname = $row['name'];
             } else {$groupname = "None";}
             
 				$badge = "";
@@ -102,13 +102,13 @@
                     <br>
                     <br>
                     <h1 class='username' style='display: inline-block;margin: 0px;'><?php echo $user; ?></h1> <small>[<?php echo $nickname; ?>]</small>
-                    <small class='status'><?php echo $status; ?></small>
+                    <small class='status'><?php echo htmlspecialchars($status); ?></small>
                     <br>
                     <br>
-                    <img class='pfp' width='235px;' src='/pfp/<?php echo $pfp; ?>'>
+                    <img class='pfp' width='235px;' src='/pfp/<?php echo htmlspecialchars($pfp); ?>'>
                     <hr>
                     <audio controls autoplay>
-                        <source src="/music/<?php echo $music; ?>" type="audio/ogg">
+                        <source src="/music/<?php echo htmlspecialchars($music); ?>" type="audio/ogg">
                     </audio>
                     <br>
                     
@@ -167,9 +167,9 @@
                     <div id="interests">
                         <div class="info" style="text-align: center;">Interests</div>
                         <?php echo $interests; ?>
+                        <br>
+                        <br>
                     </div>
-                        <br>
-                        <br>
                     <div id="bio">
                         <div class="info" style="text-align: center;">Bio</div>
                         <?php echo $bio; ?>
