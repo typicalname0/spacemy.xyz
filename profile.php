@@ -26,7 +26,8 @@
             $replace = array("", "");
 
             $user = $row['username'];
-            $css = $row['css'];
+            if($_SESSION['toggleCSS'] == true) { $css = $row['css']; } else { $css = ""; }
+            
             $status = $row['status'];
             $pfp = $row['pfp'];
             $music = $row['music'];

@@ -144,7 +144,8 @@
 				<input type="file" name="fileToUpload" id="fileToUpload">
 				<input type="submit" value="Upload Song" name="photoset">
 			</form>
-            <a href="invite.php">Invites</a>
+            <a href="invite.php">Invites</a><br>
+            <a href="togglecss.php">Disable/Enable CSS for other profiles</a>
             <br><br>
             <b>Bio</b>
 			<form method="post" enctype="multipart/form-data">
