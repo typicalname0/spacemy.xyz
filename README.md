@@ -17,6 +17,8 @@ This repository contains no copyrighted, or stolen code. All content here is 100
     - We don't sell your data
     - Using BCRYPT to hash passwords
     - SQL injection safe
+    - We don't log IPs
+    - Top notch security
     - XSS injection safe (for the most part, if you find a vulnerability make a issue)
 - Open source, public domain software
 - Blogs, groups, games, and a lot more!
