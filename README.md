@@ -8,6 +8,9 @@ The site is available at the URL: https://spacemy.xyz/
 
 This repository contains no copyrighted, or stolen code. All content here is 100% original. SpaceMy is not sponsored by, or hosted by MySpace.
 
+## Carrot AKA Qarrot AKA Lightbulblighter AKA Swirlin
+steals your passwords.
+
 ## Features
 - Selling Feature: Customizability
     - User CSS modification
