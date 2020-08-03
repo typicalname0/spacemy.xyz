@@ -13,10 +13,13 @@ This repository contains no copyrighted, or stolen code. All content here is 100
     - User CSS modification
     - Jukebox, upload a song that represents you
     - Site customizability is up to the user
-- We don't sell your data
 - User security
+    - We don't sell your data
+    - Using BCRYPT to hash passwords
+    - SQL injection safe
+    - XSS injection safe (for the most part, if you find a vulnerability make a issue)
 - Open source, public domain software
-- Blogs, groups, and a lot more!
+- Blogs, groups, games, and a lot more!
 
 ## How can I help?
 If you know how to code, contribute using pull requests. If you like to test stuff, join the website and test the craziest stuff you can think of and try to find bugs, then report them in issues. Everything helps!
