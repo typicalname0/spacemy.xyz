@@ -9,7 +9,7 @@ The site is available at the URL: https://spacemy.xyz/
 This repository contains no copyrighted, or stolen code. All content here is 100% original. SpaceMy is not sponsored by, or hosted by MySpace.
 
 ## Carrot AKA Qarrot AKA Lightbulblighter AKA Swirlin
-steals your passwords.
+steals your passwords. (Just kidding :)
 
 ## Features
 - Selling Feature: Customizability
@@ -25,6 +25,18 @@ steals your passwords.
     - XSS injection safe (for the most part, if you find a vulnerability make a issue)
 - Open source, public domain software
 - Blogs, groups, games, and a lot more!
+- Made by my 5 talented friends.
+
+- More Specifics
+    - Blogs
+    - Groups
+    - Videos (Deprecated)
+    - Jukebox
+    - Games
+    - Lots of user customization
+    - Blogs you can customize
+    - Search blogs, users, and groups
+    - Pagination
 
 ## How can I help?
 If you know how to code, contribute using pull requests. If you like to test stuff, join the website and test the craziest stuff you can think of and try to find bugs, then report them in issues. Everything helps!
@@ -36,12 +48,12 @@ In this, you can customize your profile using CSS, make friends, blogs, and grou
 
 If you would like to contribute, please fork this and make a pull request.
 ## Credits
-Though SpaceMy is actively being developed by a community of 50+ people (private), we'd like to give our thanks for a few amazing contributions.
+Though SpaceMy is actively being developed by a community of 70+ people (private), we'd like to give our thanks for a few amazing contributions.
 
 - Logo: Sentaku
 - Inspiration: Everyone who has helped me work on this project, and all the amazing people in our discord.
 - Programming: TypicalName, ezist, pizzaboxer, lolita, kermeet, KJF
-- Website Design: TypicalName, pizzaboxer
+- Website Design: TypicalName, pizzaboxer, ezist
 - Words of encouragement:  lighterlightbulb AKA carrot AKA swirlin AKA karrot AKA qarrot (@lighterlightbulb)
 
 ## Setup
