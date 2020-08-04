@@ -2,6 +2,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/build.png?b=master)](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Code Coverage](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/typicalname0/spacemy.xyz/?branch=master)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypicalname0%2Fspacemy.xyz.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypicalname0%2Fspacemy.xyz?ref=badge_shield)
 ![](https://img.shields.io/github/license/Wirecloud/markdown-editor-widget.svg)
 ## Visit the site
 The site is available at the URL: https://spacemy.xyz/
@@ -69,6 +70,9 @@ Please also keep in mind that the only official trusted sites where you can util
 
 ## License
 We use the Apache License 2.0.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypicalname0%2Fspacemy.xyz.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypicalname0%2Fspacemy.xyz?ref=badge_large)
 
 ## Contact
 You can ask me questions on my Discord, ``tydentlor#1390``
